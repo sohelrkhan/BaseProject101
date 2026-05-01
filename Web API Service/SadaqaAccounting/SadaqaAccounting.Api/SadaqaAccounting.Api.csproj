@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\images\**" />
+    <Compile Remove="wwwroot\Upload\Claims\**" />
+    <Compile Remove="wwwroot\Upload\FabricLibraryAttachment\**" />
+    <Compile Remove="wwwroot\Upload\InvoiceAttachment\**" />
+    <Compile Remove="wwwroot\Upload\Items\**" />
+    <Compile Remove="wwwroot\Upload\LeaveApplicationAttachments\**" />
+    <Compile Remove="wwwroot\Upload\LetterOfCreditAttachments\**" />
+    <Compile Remove="wwwroot\Upload\LetterOfCreditDocument\**" />
+    <Compile Remove="wwwroot\Upload\PackingListAttachments\**" />
+    <Compile Remove="wwwroot\Upload\ProjectAttachment\**" />
+    <Compile Remove="wwwroot\Upload\SampleDevelopmentAttachment\**" />
+    <Compile Remove="wwwroot\Upload\StockTakingAttachments\**" />
+    <Content Remove="wwwroot\images\**" />
+    <Content Remove="wwwroot\Upload\Claims\**" />
+    <Content Remove="wwwroot\Upload\FabricLibraryAttachment\**" />
+    <Content Remove="wwwroot\Upload\InvoiceAttachment\**" />
+    <Content Remove="wwwroot\Upload\Items\**" />
+    <Content Remove="wwwroot\Upload\LeaveApplicationAttachments\**" />
+    <Content Remove="wwwroot\Upload\LetterOfCreditAttachments\**" />
+    <Content Remove="wwwroot\Upload\LetterOfCreditDocument\**" />
+    <Content Remove="wwwroot\Upload\PackingListAttachments\**" />
+    <Content Remove="wwwroot\Upload\ProjectAttachment\**" />
+    <Content Remove="wwwroot\Upload\SampleDevelopmentAttachment\**" />
+    <Content Remove="wwwroot\Upload\StockTakingAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\Claims\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\FabricLibraryAttachment\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\InvoiceAttachment\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\Items\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\LeaveApplicationAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\LetterOfCreditAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\LetterOfCreditDocument\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\PackingListAttachments\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\ProjectAttachment\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\SampleDevelopmentAttachment\**" />
+    <EmbeddedResource Remove="wwwroot\Upload\StockTakingAttachments\**" />
+    <None Remove="wwwroot\images\**" />
+    <None Remove="wwwroot\Upload\Claims\**" />
+    <None Remove="wwwroot\Upload\FabricLibraryAttachment\**" />
+    <None Remove="wwwroot\Upload\InvoiceAttachment\**" />
+    <None Remove="wwwroot\Upload\Items\**" />
+    <None Remove="wwwroot\Upload\LeaveApplicationAttachments\**" />
+    <None Remove="wwwroot\Upload\LetterOfCreditAttachments\**" />
+    <None Remove="wwwroot\Upload\LetterOfCreditDocument\**" />
+    <None Remove="wwwroot\Upload\PackingListAttachments\**" />
+    <None Remove="wwwroot\Upload\ProjectAttachment\**" />
+    <None Remove="wwwroot\Upload\SampleDevelopmentAttachment\**" />
+    <None Remove="wwwroot\Upload\StockTakingAttachments\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NSwag.Annotations" Version="14.2.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
+    <PackageReference Include="NSwag.Core" Version="14.2.0" />
+    <PackageReference Include="NSwag.MSBuild" Version="14.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.26" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+  </ItemGroup>
+
+	<Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+		<Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
+		<Exec Command="$(NSwagExe_Net90) run nswag.json /variables:Configuration=$(Configuration)" />
+		<RemoveDir Directories="$(OutDir)References" />
+	</Target>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\Upload\EmployeeImage\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SadaqaAccounting.Application\SadaqaAccounting.Application.csproj" />
+	</ItemGroup>
+
+</Project>

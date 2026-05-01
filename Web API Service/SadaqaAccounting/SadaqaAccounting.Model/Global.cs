@@ -1,0 +1,14 @@
+﻿global using SadaqaAccounting.Model.Models.MasterSettings;
+global using Microsoft.AspNetCore.Identity;
+global using SadaqaAccounting.Model.Models.MasterSettings.AccessControl;
+global using SadaqaAccounting.Model.Models.MasterSettings.Enum;
+global using SadaqaAccounting.Model.Models.MasterSettings.ReportAccessControl;
+global using SadaqaAccounting.Shared.Mappings;
+global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using SadaqaAccounting.Model.Models.AssetManagement;
+global using SadaqaAccounting.Model.Models.Cash_BankManagement;
+global using SadaqaAccounting.Model.Models.DonorManagement;
+global using SadaqaAccounting.Model.Models.ExpenseManagement;
+global using SadaqaAccounting.Model.Models.IncomeManagement;
+global using SadaqaAccounting.Model.Models.CashBankManagement;

@@ -1,0 +1,5 @@
+<div *ngIf="(control?.touched || control?.dirty) && control?.invalid" class="text-danger mt-2">
+  <ng-container *ngFor="let error of getErrors()">
+    <div>{{ error }}</div>
+  </ng-container>
+</div>

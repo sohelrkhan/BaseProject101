@@ -1,0 +1,71 @@
+<div class="page-wrapper vh-100 d-flex flex-column justify-content-between">
+  <div class="content flex-fill h-100">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Cash Bank Management</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li class="breadcrumb-item"><a routerLink="/app/banks">Bank</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Bank</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-3">
+      <div class="col-md-12">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="fas fa-plus me-2"></i>
+            <h5 class="mb-0 text-white">Update Bank</h5>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" autocomplete="off">
+              <div class="col-md-3">
+                <label for="name" class="form-label">Name <span style="color: red">*</span></label>
+                <input type="text" id="name" name="name" [(ngModel)]="bankUpdateModel.name" class="form-control" placeholder="Enter bank name" />
+              </div>
+              <div class="col-md-3">
+                <label for="branchName" class="form-label">Branch Name <span style="color: red">*</span></label>
+                <input type="text" id="branchName" name="branchName" [(ngModel)]="bankUpdateModel.branchName" class="form-control" placeholder="Enter branch name" />
+              </div>
+              <div class="col-md-3">
+                <label for="accountNumber" class="form-label">Account Number <span style="color: red">*</span></label>
+                <input type="text" id="accountNumber" name="accountNumber" [(ngModel)]="bankUpdateModel.accountNumber" class="form-control" placeholder="Enter account number" />
+              </div>
+              <div class="col-md-3">
+                <label for="openingBalance" class="form-label">Opening Balance <span style="color: red">*</span></label>
+                <input type="number" id="openingBalance" name="openingBalance" [(ngModel)]="bankUpdateModel.openingBalance" class="form-control" placeholder="Enter opening balance" />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="statusId">Status <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder select2" id="statusId">
+                  <option *ngFor="let status of statusSelectList" [value]="status.id">{{ status.name }}</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <div class="col-12">
+              <div class="modal-footer">
+                <button type="button" routerLink="/app/banks" class="btn btn-light me-2">
+                  <i class="ti ti-arrow-back-up me-1"></i>
+                  Back
+                </button>
+                <button type="button" (click)="onClickUpdateBank()" class="btn btn-primary">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

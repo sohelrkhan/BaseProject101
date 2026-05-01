@@ -1,0 +1,199 @@
+<div class="page-wrapper d-flex flex-column justify-content-between">
+  <div class="content flex-fill">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Income Management</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a>
+                <i class="ti ti-smart-home me-1"></i>
+                Dashboard
+              </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Income
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+        <div class="mb-2" *appCheckPermission="{ feature: 'Income', action: 'Create' }">
+          <a class="btn btn-primary d-flex align-items-center" routerLink="/app/income/create">
+            <i class="ti ti-circle-plus me-2"></i>
+            Add Income
+          </a>
+        </div>
+        <div class="ms-2 head-icons">
+          <a href="javascript:void(0);" class data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
+            <i class="ti ti-chevrons-up"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+              <h5>Income List</h5>
+            </div>
+            <div class="card-body p-3">
+              <div class="row mb-3">
+                <div class="col-md-2 text-start">
+                  <label class="form-label">Entries per page</label>
+                  <select class="form-select" [value]="pagination.pageSize" (change)="changePageSize(+$any($event.target).value)">
+                    <option [selected]="10" [value]="10">10</option>
+                    <option [value]="25">25</option>
+                    <option [value]="50">50</option>
+                    <option [value]="100">100</option>
+                  </select>
+                </div>
+                <div class="col-md-7"></div>
+                <div class="col-md-3 justify-content-end">
+                  <label class="form-label">Search</label>
+                  <input type="text" class="form-control" placeholder="Search Income" (input)="onSearch($any($event.target).value)" />
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle text-nowrap">
+                  <thead class="table-dark">
+                    <tr>
+                      <th role="button" (click)="sortBy('incomeCategoryName')"> 
+                        Income Category
+                        <span *ngIf="pagination.sortField === 'incomeCategoryName'">
+                          {{ pagination.sortOrder === 'ascend' ? '▲' : '▼' }}
+                        </span>
+                      </th>
+                      <th role="button" (click)="sortBy('donorName')"> 
+                        Donor
+                        <span *ngIf="pagination.sortField === 'donorName'">
+                          {{ pagination.sortOrder === 'ascend' ? '▲' : '▼' }}
+                        </span>
+                      </th>
+                      <th role="button" (click)="sortBy('eventName')"> 
+                        Event
+                        <span *ngIf="pagination.sortField === 'eventName'">
+                          {{ pagination.sortOrder === 'ascend' ? '▲' : '▼' }}
+                        </span>
+                      </th>
+                      <th role="button" (click)="sortBy('bankName')"> 
+                        Bank
+                        <span *ngIf="pagination.sortField === 'bankName'">
+                          {{ pagination.sortOrder === 'ascend' ? '▲' : '▼' }}
+                        </span>
+                      </th>
+                      <th role="button" (click)="sortBy('cashName')"> 
+                        Cash
+                        <span *ngIf="pagination.sortField === 'cashName'">
+                          {{ pagination.sortOrder === 'ascend' ? '▲' : '▼' }}
+                        </span>
+                      </th>
+                      <th role="button" (click)="sortBy('paymentModeName')"> 
+                        Payment Mode
+                        <span *ngIf="pagination.sortField === 'paymentModeName'">
+                          {{ pagination.sortOrder === 'ascend' ? '▲' : '▼' }}
+                        </span>
+                      </th>
+                      <th class="text-center">Date</th>
+                      <th class="text-end">Amount</th>
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let income of incomes">
+                      <td>
+                        {{ income.incomeCategoryName }}
+                      </td>
+                      <td>
+                        <span class="text-info fw-bold">{{ income.donorName }}</span> <br>
+                        <span>Receipt No: </span><span class="text-success">{{ income.receiptNo ?? "N/A" }}</span> <br>
+                        <span>Receipt Book No: </span><span class="text-success">{{ income.receiptBookNo ?? "N/A" }}</span> 
+                      </td>
+                      <td>
+                        {{ income.eventName }}
+                      </td>
+                      <td>
+                        {{ income.bankName }}
+                      </td>
+                      <td>
+                        {{ income.cashName }}
+                      </td>
+                      <td>
+                        {{ income.paymentModeName }}
+                      </td>
+                      <td class="text-center">
+                        {{ income.receiptDate | ordinaldate }}
+                      </td>
+                      <td class="text-end text-success fw-bold">
+                        {{ income.amount.toFixed(2) }}
+                      </td>
+                      <td>
+                        <div class="hstack gap-2 fs-15 align-content-center justify-content-center">
+                          <a class="btn btn-icon btn-sm btn-info rounded-pill" routerLink="/app/income/update/{{ income.encryptedId }}">
+                            <i class="feather-edit"></i>
+                          </a>
+                          <a class="btn btn-icon btn-sm btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#delete" (click)="openDeleteModal(income.id)">
+                            <i class="feather-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="incomes.length === 0">
+                      <td colspan="8" class="text-center py-4">No data found.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="text-muted">
+                  Showing
+                  {{ (pagination.page * pagination.pageSize) + (incomes.length ? 1 : 0) }}
+                  -
+                  {{ (pagination.page * pagination.pageSize) + incomes.length }}
+                  of {{ totalRecords }}
+                </div>
+                <nav>
+                  <ul class="pagination mb-0">
+                    <li class="page-item" [class.disabled]="pagination.page === 0">
+                      <button class="page-link" (click)="prevPage()">Previous</button>
+                    </li>
+                    <li class="page-item" *ngFor="let p of pageButtons" [class.active]="p === pagination.page">
+                      <button class="page-link" (click)="goToPage(p)">
+                        {{ p + 1 }}
+                      </button>
+                    </li>
+                    <li class="page-item" [class.disabled]="pagination.page >= totalPages - 1">
+                      <button class="page-link" (click)="nextPage()">Next</button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="delete">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <span class="avatar avatar-xl bg-transparent-danger text-danger mb-3">
+          <i class="ti ti-trash-x fs-36"></i>
+        </span>
+        <h4 class="mb-1">Confirm Delete</h4>
+        <div class="d-flex justify-content-center mt-3">
+          <a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">
+            Cancel
+          </a>
+          <a class="btn btn-danger" (click)="onClickDeleteIncome()" data-bs-dismiss="modal">Yes, Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true" >
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

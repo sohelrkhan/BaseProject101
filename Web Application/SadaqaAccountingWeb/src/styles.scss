@@ -1,0 +1,146 @@
+.ts-dropdown {
+  background-color: white !important; /* Blue dropdown background */
+  color: #777 !important; /* White text */
+}
+
+::selection {
+  background: #017adc;
+  color: #fff;
+  text-shadow: none;
+}
+
+.nav-tabs.nav-tabs-solid li a.active {
+  background-color: #017adc;
+  border-color: #017adc;
+  color: #fff;
+  border-radius: 0;
+}
+
+.ts-dropdown .option {
+  color: #777 !important; /* Option text color */
+  height: 35px !important;
+  font-size: 13px;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .active {
+  color: white !important; /* Option text color */
+  background-color: #4680ff !important; /* Darker blue on hover */
+}
+
+/* Tom Select styled like Select2 */
+.ts-wrapper {
+  border: 1px solid #ddd8d8 !important;
+  border-radius: 4px !important;
+  background-color: #fff !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  position: relative !important;
+  min-height: 38px !important;
+}
+
+.ts-wrapper.single .ts-control {
+  background-color: #fff !important;
+  border: none !important;
+  padding: 8px 30px 8px 12px !important;
+  line-height: 1.42857143 !important;
+  height: 38px !important;
+  box-sizing: border-box !important;
+}
+
+.ts-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  border-color: #d4cfcf transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px 4px 0 4px;
+  height: 0;
+  width: 0;
+  z-index: 2;
+}
+
+.ts-wrapper.focus {
+  border-color: #4680ff !important;
+  outline: 0 !important;
+}
+
+.ts-dropdown {
+  background-color: white !important;
+  border: 1px solid #4680ff !important;
+  border-radius: 4px !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175) !important;
+  z-index: 1051 !important;
+}
+
+.ts-dropdown .option {
+  padding: 6px 12px !important;
+  color: #333 !important;
+  font-size: 14px !important;
+  height: auto !important;
+  line-height: 1.42857143 !important;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .option.active {
+  background-color: #4680ff !important;
+  color: white !important;
+}
+
+.ts-dropdown .option.selected {
+  background-color: #eeececf3 !important;
+  color: #797676 !important;
+}
+
+.page-wrapper {
+  padding: 0 0 0 0px !important;
+}
+
+.form-check-input {
+  border: 1px solid #4680ff !important;
+}
+
+th {
+  background: #ebebeb !important;
+}
+
+.sticky-col {
+  background: white !important;
+}
+
+.h-max-content {
+  height: max-content !important;
+}
+
+.sticky-right {
+  position: sticky !important;
+  right: 0;
+  display: block;
+  width: auto;
+  min-width: 140px;
+  white-space: nowrap;
+  background: #fff !important; /* Or your table header background */
+  z-index: 2; /* Keep it above scrolling content */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) !important; /* Optional visual separation */
+}
+
+th.sticky-right {
+  background: rgb(235 235 235) !important; /* Or your table header background */
+}
+
+:host ::ng-deep .modal-dialog {
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
+}
+
+:host ::ng-deep .modal.show .modal-dialog {
+  animation-name: none;
+}
+
+/* Apply shake when backdrop is clicked */
+:host ::ng-deep .modal[data-bs-backdrop="static"] .modal-dialog {
+  animation-name: modalShake;
+}

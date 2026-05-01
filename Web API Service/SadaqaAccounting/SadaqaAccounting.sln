@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11201.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D7C4EA07-430C-4316-A521-0BFF33AE6345}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadaqaAccounting.Shared", "SadaqaAccounting.Shared\SadaqaAccounting.Shared.csproj", "{4DF6E950-E6D9-2DDA-09F1-77E3C8937F3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadaqaAccounting.Model", "SadaqaAccounting.Model\SadaqaAccounting.Model.csproj", "{6F575BCD-C92B-EDF9-6A22-73D75ED6A659}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadaqaAccounting.Repository", "SadaqaAccounting.Repository\SadaqaAccounting.Repository.csproj", "{E3E93F2E-266D-9589-217B-84FF17EBD946}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadaqaAccounting.Database", "SadaqaAccounting.Database\SadaqaAccounting.Database.csproj", "{060930A1-C987-CFFF-35FE-7CBDA439927F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadaqaAccounting.Application", "SadaqaAccounting.Application\SadaqaAccounting.Application.csproj", "{5F544B70-562E-1338-A422-D6B683F9EB7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SadaqaAccounting.Api", "SadaqaAccounting.Api\SadaqaAccounting.Api.csproj", "{7E4A7E30-9877-5D8C-F0AB-F260D8127DD4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DF6E950-E6D9-2DDA-09F1-77E3C8937F3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF6E950-E6D9-2DDA-09F1-77E3C8937F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF6E950-E6D9-2DDA-09F1-77E3C8937F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF6E950-E6D9-2DDA-09F1-77E3C8937F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F575BCD-C92B-EDF9-6A22-73D75ED6A659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F575BCD-C92B-EDF9-6A22-73D75ED6A659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F575BCD-C92B-EDF9-6A22-73D75ED6A659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F575BCD-C92B-EDF9-6A22-73D75ED6A659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3E93F2E-266D-9589-217B-84FF17EBD946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3E93F2E-266D-9589-217B-84FF17EBD946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3E93F2E-266D-9589-217B-84FF17EBD946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3E93F2E-266D-9589-217B-84FF17EBD946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{060930A1-C987-CFFF-35FE-7CBDA439927F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{060930A1-C987-CFFF-35FE-7CBDA439927F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{060930A1-C987-CFFF-35FE-7CBDA439927F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{060930A1-C987-CFFF-35FE-7CBDA439927F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F544B70-562E-1338-A422-D6B683F9EB7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F544B70-562E-1338-A422-D6B683F9EB7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F544B70-562E-1338-A422-D6B683F9EB7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F544B70-562E-1338-A422-D6B683F9EB7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E4A7E30-9877-5D8C-F0AB-F260D8127DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E4A7E30-9877-5D8C-F0AB-F260D8127DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E4A7E30-9877-5D8C-F0AB-F260D8127DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E4A7E30-9877-5D8C-F0AB-F260D8127DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B0A7687-BBBC-40A6-AD33-68EC2B968C51}
+	EndGlobalSection
+EndGlobal

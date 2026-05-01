@@ -1,0 +1,104 @@
+<div class="page-wrapper d-flex flex-column justify-content-between">
+  <div class="content flex-fill">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Administration</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page" routerLink="/app/companies">Companies List</li>
+            <li class="breadcrumb-item active" aria-current="page">Update Company</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-3">
+      <div class="col-md-12">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="fas fa-plus me-2"></i>
+            <h5 class="mb-0 text-white">Update Company</h5>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" autocomplete="off">
+              <div class="col-md-12 mb-3">
+                <div class="row text-center justify-content-center align-items-center">
+                  <div class="col-md-3">
+                    <label for="logo" class="form-label fw-semibold">Company Logo</label>
+                    <div class="logo-upload text-center border rounded-4 p-3 bg-white shadow-sm">
+                      <span class="avatar-container avatar avatar-xxl border-2 border-white m-auto d-flex mb-2">
+                        <img [src]="companyUpdateModel.logo ? applicationBaseUrl + companyUpdateModel.logo : 'assets/img/profiles/avatar-12.jpg'" class="img-fluid rounded-circle border mb-2" style="width: 100px; height: 100px;" alt="Preview" />
+                        <a class="upload-icon ti ti-upload" data-bs-toggle="modal" data-bs-target="#upload_profile_image_modal"></a>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="name" class="form-label">Name <span class="text-danger fw-bold">*</span></label>
+                <input type="text" id="name" name="name" [(ngModel)]="companyUpdateModel.name" class="form-control" placeholder="Enter company name" />
+              </div>
+              <div class="col-md-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="companyUpdateModel.email" class="form-control" placeholder="example@gmail.com" />
+              </div>
+              <div class="col-md-3">
+                <label for="mobile" class="form-label">Mobile </label>
+                <input type="text" id="mobile" name="mobile" [(ngModel)]="companyUpdateModel.mobile" class="form-control" placeholder="+8801710000000" />
+              </div>
+             
+              <div class="col-md-3">
+                <label for="website" class="form-label">Web site</label>
+                <input type="text" id="website" name="website" [(ngModel)]="companyUpdateModel.website" class="form-control" placeholder="https://abc.com" />
+              </div>
+              <div class="col-md-3">
+                <label for="country" class="form-label">Country <span class="text-danger fw-bold">*</span></label>
+                <input type="text" id="country" name="country" [(ngModel)]="companyUpdateModel.country" class="form-control" placeholder="Enter country name" />
+              </div>
+               <div class="col-md-3">
+                <label class="form-label" for="statusId">Status <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder select2" id="statusId">
+                  {{ statuses }}
+                  <option *ngFor="let status of statuses" [value]="status.id">{{ status.name }}</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="address" class="form-label">Address</label>
+                <textarea id="address" name="address" [(ngModel)]="companyUpdateModel.address" class="form-control" placeholder="Enter full address."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <div class="col-12">
+              <div class="modal-footer">
+                <button type="button" routerLink="/app/companies" class="btn btn-light me-2">
+                  <i class="ti ti-arrow-back-up me-1"></i>
+                  Back
+                </button>
+                <button type="button" (click)="onClickUpdateCompany()" class="btn btn-primary" *appCheckPermission="{ feature: 'Company', action: 'Update' }">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="upload_profile_image_modal">
+  <div class="modal-dialog modal-dialog-centered modal-mm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h2>Upload Company Logo</h2>
+        <app-image-upload [isProfilePictureUpload]="true" [entityId]="companyUpdateModel.id" (imageUploaded)="onClickUpdateImage($event)"></app-image-upload>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

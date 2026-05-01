@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SadaqaAccounting.Database\SadaqaAccounting.Database.csproj" />
+	</ItemGroup>
+
+</Project>

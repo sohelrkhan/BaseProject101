@@ -1,0 +1,85 @@
+<div class="page-wrapper d-flex flex-column justify-content-between">
+  <div class="content flex-fill">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Reports & Analytics</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a>
+                <i class="ti ti-smart-home me-1"></i>
+                Dashboard
+              </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Reports</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center mt-3">
+      <div class="col-md-12">
+        <div class="card shadow-lg mt-2">
+          <div class="card-header">
+            <h4>Search Reports</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <div class="input-icon-end position-relative">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="searchText"
+                    (input)="onSearchChange()"
+                    placeholder="Search reports..."
+                    autocomplete="off" />
+                  <span class="input-icon-addon">
+                    <i class="ti ti-search"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card shadow-lg">
+          <div class="card-body">
+            <div class="row">
+              <ng-container
+                *ngIf="filteredGroupReportRegistryModel.length > 0; else noDataTemplate">
+                <div class="col-md-3" *ngFor="let reportGroup of filteredGroupReportRegistryModel">
+                  <div class="card mb-3 scrollable-card-body">
+                    <div class="card-header">
+                      <h5 class="text-primary">{{ reportGroup.groupName }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li
+                        class="list-group-item"
+                        *ngFor="let report of reportGroup.reportRegistryList">
+                        <a
+                          [routerLink]="report.url"
+                          routerLinkActive="active"
+                          [innerHTML]="
+                            highlightSearchText(report.reportCode + '. ' + report.name)
+                          "></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin"></ngx-spinner>
+
+<ng-template #noDataTemplate>
+  <div class="alert alert-secondary text-center">No reports available</div>
+</ng-template>

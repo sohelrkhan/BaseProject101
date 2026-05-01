@@ -1,0 +1,32 @@
+<div class="lu-page">
+  <main class="lu-card" role="main" aria-label="Set account unit">
+    <div class="lu-badge">Setup</div>
+    <h1 class="lu-title">Select Account Unit</h1>
+    <p class="lu-sub">
+      Choose the account you’ll manage. This determines what data appears on your dashboard.
+    </p>
+    <div class="lu-info">
+      You can manage <strong>only one account unit at a time</strong>.
+      Switching units will reload dashboard data.
+    </div>
+    <label class="lu-label" for="unit">Account Unit</label>
+    <div class="lu-select">
+      <select id="unit" class="lu-control" [(ngModel)]="selectedUserAccountUnitId">
+        <option value="-1" disabled selected>Select one…</option>
+        @for (unit of userAccountUnit.accountUnitList; track unit.id) {
+          <option [value]="unit.id">
+            {{ unit.name }}
+          </option>
+        }
+      </select>
+      <span class="lu-caret" aria-hidden="true">▾</span>
+    </div>
+    <button type="button" class="lu-btn" (click)="onClickContinue()">
+      Continue
+      <span class="lu-arrow" aria-hidden="true">→</span>
+    </button>
+    <div class="lu-note" aria-hidden="true">
+      You can change the account unit later from Settings
+    </div>
+  </main>
+</div>

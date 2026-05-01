@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="EPPlus" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SadaqaAccounting.Repository\SadaqaAccounting.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApplicationLogic\IncomeManagement\IncomeLogic\Command\" />
+    <Folder Include="ApplicationLogic\IncomeManagement\IncomeLogic\Queries\" />
+    <Folder Include="ApplicationLogic\Reports\MonthlyIncomeExpenseLogic\Queries\" />
+  </ItemGroup>
+
+</Project>

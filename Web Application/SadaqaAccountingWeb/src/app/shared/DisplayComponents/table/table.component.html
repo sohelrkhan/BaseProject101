@@ -1,0 +1,280 @@
+<div class="table-container">
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       TABLE HEADER - Search & Actions Section
+       ═══════════════════════════════════════════════════════════════════════════ -->
+  <div class="table-header">
+    <!-- 
+      SEARCH BOX
+      Allows users to filter table rows by searching across all columns
+    -->
+    <div class="search-box">
+      <!-- 
+        SEARCH INPUT
+        [(ngModel)]: Two-way data binding - syncs input value with searchInput property
+        (keypress): Event binding - calls onSearchKeyPress() on every key press
+        Triggers search when user presses Enter key
+      -->
+      <input
+        type="text"
+        placeholder="Search... (Press Enter)"
+        [(ngModel)]="searchInput"
+        (keypress)="onSearchKeyPress($event)"
+        class="search-input" />
+
+      <!-- 
+        SEARCH ICON
+        Clickable icon to trigger search (alternative to pressing Enter)
+        (click): Event binding - calls onSearchIconClick() when clicked
+      -->
+      <span class="search-icon" (click)="onSearchIconClick()">
+        <i class="ti ti-search"></i>
+      </span>
+
+      <!-- 
+        CLEAR SEARCH ICON (X button)
+        *ngIf: Structural directive - only renders if searchInput has a value
+        (click): Event binding - calls clearSearch() to reset search
+      -->
+      <span *ngIf="searchInput" class="clear-icon" (click)="clearSearch()">✕</span>
+    </div>
+
+    <!-- 
+      TABLE ACTIONS SLOT
+      Content projection area for parent component to add custom action buttons
+      
+      <ng-content>: Angular's content projection directive
+      select="[actions]": CSS selector that targets elements with 'actions' attribute
+      
+      Parent Usage Example:
+      <app-table ...>
+        <div actions>
+          <button (click)="addNew()">Add New</button>
+          <button (click)="export()">Export</button>
+        </div>
+      </app-table>
+    -->
+    <div class="table-actions">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       TABLE WRAPPER - Main Table Display Area
+       ═══════════════════════════════════════════════════════════════════════════ -->
+  <div class="table-wrapper">
+    <table class="data-table table-bordered">
+      <!-- ═══════════════════════════════════════════════════════════════════════
+           TABLE HEAD - Column Headers
+           ═══════════════════════════════════════════════════════════════════════ -->
+      <thead>
+        <tr>
+          <!-- 
+            HEADER CELL (TH) - One for each column
+            *ngFor: Loops through columns array (provided by parent)
+            [style.width]: Property binding - sets column width from col.width (e.g., "150px", "20%")
+            [style.text-align]: Property binding - sets text alignment (left/center/right)
+            [class.sortable]: Dynamic class - adds 'sortable' class if column is sortable
+            [class.sorted-asc]: Dynamic class - adds when this column is sorted ascending
+            [class.sorted-desc]: Dynamic class - adds when this column is sorted descending
+            (click): Triggers sorting when header is clicked (only if sortable)
+          -->
+          <th
+            *ngFor="let col of columns"
+            [style.width]="col.width"
+            [style.text-align]="col.align || 'left'"
+            [class.sortable]="col.sortable !== false"
+            [class.sorted-asc]="sortField === col.field && sortOrder === 'asc'"
+            [class.sorted-desc]="sortField === col.field && sortOrder === 'desc'"
+            (click)="col.sortable !== false && onSort(col.field)">
+            <!-- 
+              HEADER CONTENT WRAPPER
+              [style.justify-content]: Property binding - aligns content based on column alignment
+              Uses getJustifyContent() method to convert text alignment to flexbox justify-content
+            -->
+            <div class="th-content" [style.justify-content]="getJustifyContent(col.align)">
+              <!-- 
+                COLUMN HEADER TEXT
+                {{ col.header }}: Interpolation - displays column header text
+              -->
+              <span>{{ col.header }}</span>
+
+              <!-- 
+                SORT INDICATOR ICONS
+                *ngIf: Only shows if column is sortable (sortable !== false)
+              -->
+              <span *ngIf="col.sortable !== false" class="sort-icon">
+                <!-- 
+                  INACTIVE SORT ICON (⇅)
+                  Shows when column is not currently sorted
+                  *ngIf: Only visible when sortField is not this column
+                -->
+                <span *ngIf="sortField !== col.field" class="sort-inactive">⇅</span>
+
+                <!-- 
+                  ASCENDING SORT ICON (↑)
+                  Shows when column is sorted ascending
+                  *ngIf: Only visible when this column is sorted and order is 'asc'
+                -->
+                <span *ngIf="sortField === col.field && sortOrder === 'asc'" class="sort-active">
+                  ↑
+                </span>
+
+                <!-- 
+                  DESCENDING SORT ICON (↓)
+                  Shows when column is sorted descending
+                  *ngIf: Only visible when this column is sorted and order is 'desc'
+                -->
+                <span *ngIf="sortField === col.field && sortOrder === 'desc'" class="sort-active">
+                  ↓
+                </span>
+              </span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <!-- ═══════════════════════════════════════════════════════════════════════
+           TABLE BODY - Data Rows
+           ═══════════════════════════════════════════════════════════════════════ -->
+      <tbody>
+        <!-- 
+          LOADING STATE ROW
+          *ngIf: Only renders when loading is true
+          Shows spinner and message while data is being fetched
+        -->
+        <tr *ngIf="loading" class="loading-row">
+          <!-- 
+            Single cell spanning all columns
+            [attr.colspan]: Attribute binding - sets HTML colspan attribute
+            Dynamically spans across all columns (columns.length)
+          -->
+          <td [attr.colspan]="columns.length">
+            <div class="loading-state">
+              <div class="spinner"></div>
+              <span>Loading data...</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- 
+          EMPTY STATE ROW
+          *ngIf: Shows when not loading AND displayData array is empty
+          Different messages shown based on whether search is active
+        -->
+        <tr *ngIf="!loading && displayData.length === 0" class="empty-row">
+          <td [attr.colspan]="columns.length">
+            <div class="empty-state">
+              <!-- Empty state icon -->
+              <span class="empty-icon"><i class="ti ti-database-x"></i></span>
+
+              <!-- 
+                Conditional message using ternary operator
+                If searchTerm exists: "No results found for your search"
+                Otherwise: "No data available"
+              -->
+              <p>{{ searchTerm ? "No results found for your search" : "No data available" }}</p>
+
+              <!-- 
+                Clear Search Button
+                *ngIf: Only shows if searchTerm has a value
+                Allows user to reset search and see all data again
+              -->
+              <button *ngIf="searchTerm" class="clear-search-btn" (click)="clearSearch()">
+                Clear Search
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ═══════════════════════════════════════════════════════════════════════
+             DATA ROWS - Actual Table Data
+             ═══════════════════════════════════════════════════════════════════════ -->
+
+        <!-- 
+          DATA ROW
+          *ngFor: Loops through displayData array (filtered, sorted, paginated data)
+          let row: Creates local template variable 'row' with current row data object
+          let i = index: Creates local template variable 'i' with current iteration index (0-based)
+          [class.row-even]: Dynamic class - adds 'row-even' class for even rows (0, 2, 4...)
+          [class.row-odd]: Dynamic class - adds 'row-odd' class for odd rows (1, 3, 5...)
+        -->
+        <tr
+          *ngFor="let row of displayData; let i = index"
+          [class.row-even]="i % 2 === 0"
+          [class.row-odd]="i % 2 !== 0"
+          class="data-row">
+          <!-- 
+            DATA CELL (TD) - One for each column
+            *ngFor: Loops through columns array to create cells in correct order
+            [style.text-align]: Property binding - sets text alignment for cell
+          -->
+          <td *ngFor="let col of columns" [style.text-align]="col.align || 'left'">
+            <!-- ═══════════════════════════════════════════════════════════════════
+                 ACTIONS COLUMN (Special Handling)
+                 ═══════════════════════════════════════════════════════════════════ -->
+
+            <!-- 
+              Checks if this is the 'actions' column (special column for buttons)
+              *ngIf: If true, renders action buttons; otherwise renders normal cell data
+              else normalCell: If condition is false, render the #normalCell template
+            -->
+            <div
+              *ngIf="col.field === 'actions'; else normalCell"
+              class="d-flex gap-2 justify-content-center">
+              <!-- 
+                ACTION BUTTONS TEMPLATE PROJECTION
+                
+                <ng-container>: Wrapper that doesn't create extra DOM elements
+                
+                *ngTemplateOutlet: Directive to render a template reference
+                - Receives actionsTemplate from parent via @ContentChild
+                
+                context: Provides data to the parent's actions template
+                - $implicit: row - Default binding (parent uses: let-row)
+                - rowAction: onRowAction.bind(this) - Named binding (parent uses: let-action="rowAction")
+                
+                .bind(this): Ensures onRowAction method maintains correct 'this' context
+                
+                Parent's Template Example:
+                <ng-template #actionsTemplate let-row let-action="rowAction">
+                  <button (click)="action('edit', row)">Edit</button>
+                  <button (click)="action('delete', row)">Delete</button>
+                </ng-template>
+              -->
+              <ng-container
+                *ngTemplateOutlet="
+                  actionsTemplate;
+                  context: { $implicit: row, rowAction: onRowAction.bind(this) }
+                "></ng-container>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════════
+                 NORMAL DATA CELL
+                 ═══════════════════════════════════════════════════════════════════ -->
+
+            <!-- 
+              #normalCell: Template reference (used in *ngIf else clause above)
+              Rendered for all non-action columns
+            -->
+            <ng-template #normalCell>
+              <!-- 
+                FORMATTED CELL VALUE
+                [innerHTML]: Property binding - renders HTML content (allows formatting)
+                formatValue(): Method that formats cell data based on column configuration
+                  - Handles different data types (dates, numbers, booleans)
+                  - Applies custom pipes if specified in column config
+                  - Can add HTML styling (e.g., badges, icons)
+                
+                Parameters:
+                - row[col.field]: The actual data value from row object
+                - col: Column configuration object (contains formatting rules)
+                - row: Full row object (in case formatting needs other fields)
+              -->
+              <span [innerHTML]="formatValue(row[col.field], col, row)"></span>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

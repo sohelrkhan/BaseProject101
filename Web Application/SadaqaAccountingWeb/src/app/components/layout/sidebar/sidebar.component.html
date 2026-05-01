@@ -1,0 +1,366 @@
+<div class="sidebar shadow-sm" id="sidebar">
+  <div class="sidebar-inner">
+    <div id="sidebar-menu" class="sidebar-menu">
+      <ul>
+        <li class="menu-title" 
+          *ngIf="sidebarPermissionService.hasAnyAccessToFeature(['Action', 'Report Registry', 'Report User Access', 
+          'Role Feature Actions', 'Employee',])">
+          <span>ADMINISTRATION</span>
+        </li>
+        <li>
+          <ul>
+            <li class="submenu" [class.open]="isSubmenuOpen('accessControl')" 
+              *ngIf="sidebarPermissionService.hasAnyAccessToFeature(['Action', 'Report Registry', 
+              'Report User Access', 'Role Feature Actions',])">
+              <a (click)="toggleSubmenu('accessControl')">
+                <i class="ti ti-settings"></i>
+                <span>Access Control</span>
+                <span class="menu-arrow"></span>
+              </a>
+              <ul [class.show]="isSubmenuOpen('accessControl')">
+                <li class="submenu submenu-two"
+                  [class.open]="isSubmenuOpen('userActionControl')"
+                  *ngIf="sidebarPermissionService.hasAnyAccessToFeature(['Action'])">
+                  <a (click)="toggleSubmenu('userActionControl')">
+                    Action Control
+                    <span class="menu-arrow inside-submenu"></span>
+                  </a>
+                  <ul [class.show]="isSubmenuOpen('userActionControl')">
+                    <li>
+                      <a
+                        routerLinkActive="active"
+                        routerLink="/app/actions"
+                        *ngIf="
+                          sidebarPermissionService.hasAccess('Action', 'List')
+                        "
+                      >
+                        Actions
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        routerLinkActive="active"
+                        routerLink="/app/feature-action-mapping/create"
+                        *ngIf="
+                          sidebarPermissionService.hasAccess('Action', 'List')
+                        "
+                      >
+                        Feature Action Mapping
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        routerLinkActive="active"
+                        routerLink="/app/user-access-control/create"
+                        *ngIf="
+                          sidebarPermissionService.hasAccess('Action', 'List')
+                        "
+                      >
+                        User Feature Action Mapping
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="submenu submenu-two"
+                  [class.open]="isSubmenuOpen('userAccountUnit')"
+                  *ngIf="
+                    sidebarPermissionService.hasAnyAccessToFeature([
+                      'User Account Unit',
+                    ])
+                  "
+                >
+                  <a (click)="toggleSubmenu('userAccountUnit')">
+                    Account Control
+                    <span class="menu-arrow inside-submenu"></span>
+                  </a>
+                  <ul [class.show]="isSubmenuOpen('userActionControl')">
+                    <li>
+                      <a
+                        routerLinkActive="active"
+                        routerLink="/app/user-account-mapping/create"
+                        *ngIf="
+                          sidebarPermissionService.hasAccess(
+                            'User Account Unit',
+                            'Create'
+                          )
+                        "
+                      >
+                        User Account Mapping
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li
+                  class="submenu submenu-two"
+                  [class.open]="isSubmenuOpen('reportActionControl')"
+                  *ngIf="
+                    sidebarPermissionService.hasAnyAccessToFeature([
+                      'Report Registry',
+                      'Report User Access',
+                      'Role Feature Actions',
+                    ])
+                  "
+                >
+                  <a (click)="toggleSubmenu('reportActionControl')">
+                    Report Action Control
+                    <span class="menu-arrow inside-submenu"></span>
+                  </a>
+                  <ul [class.show]="isSubmenuOpen('reportActionControl')">
+                    <li>
+                      <a
+                        routerLinkActive="active"
+                        routerLink="/app/report-registry"
+                        *ngIf="
+                          sidebarPermissionService.hasAccess(
+                            'Report Registry',
+                            'List'
+                          )
+                        "
+                      >
+                        Report Registry
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        routerLinkActive="active"
+                        routerLink="/app/report-user-access"
+                        *ngIf="
+                          sidebarPermissionService.hasAccess(
+                            'Report User Access',
+                            'List'
+                          )
+                        "
+                      >
+                        Report User Access
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a
+                    routerLinkActive="active"
+                    routerLink="/app/role-feature-actions"
+                    *ngIf="
+                      sidebarPermissionService.hasAccess(
+                        'Role Feature Actions',
+                        'List'
+                      )
+                    "
+                  >
+                    Role Feature Actions
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="submenu"
+              [class.open]="isSubmenuOpen('masterSettings')"
+              *ngIf="
+                sidebarPermissionService.hasAnyAccessToFeature([
+                  'Company',
+                  'Module',
+                ])
+              "
+            >
+              <a (click)="toggleSubmenu('masterSettings')">
+                <i class="ti ti-settings"></i>
+                <span>Configurations</span>
+                <span class="menu-arrow"></span>
+              </a>
+              <ul [class.show]="isSubmenuOpen('masterSettings')">
+                <li
+                  *ngIf="sidebarPermissionService.hasAccess('Company', 'List')"
+                >
+                  <a
+                    routerLinkActive="active"
+                    routerLink="active"
+                    routerLink="/app/companies"
+                  >
+                    Companies
+                  </a>
+                </li>
+                <li>
+                  <a
+                    routerLinkActive="active"
+                    routerLink="/app/modules"
+                    *ngIf="sidebarPermissionService.hasAccess('Module', 'List')"
+                  >
+                    Modules
+                  </a>
+                </li>
+                <li>
+                  <a
+                    routerLinkActive="active"
+                    routerLink="/app/events"
+                    *ngIf="sidebarPermissionService.hasAccess('Event', 'List')"
+                  >
+                    Events
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <li
+                  class="submenu"
+                  [class.open]="isSubmenuOpen('employee')"
+                  *ngIf="
+                    sidebarPermissionService.hasAnyAccessToFeature(['Employee'])
+                  "
+                >
+                  <a (click)="toggleSubmenu('employee')">
+                    <i class="ti ti-user-plus"></i>
+                    <span>Employee</span>
+                    <span class="menu-arrow"></span>
+                  </a>
+                  <ul [class.show]="isSubmenuOpen('employee')">
+                    <li
+                      *ngIf="
+                        sidebarPermissionService.hasAccess('Employee', 'List')
+                      "
+                    >
+                      <a routerLink="/app/employees" routerLinkActive="active"
+                        >Employees</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <li
+                  class="submenu"
+                  [class.open]="isSubmenuOpen('donorManagement')"
+                  *ngIf="
+                    sidebarPermissionService.hasAnyAccessToFeature(['Donor'])
+                  "
+                >
+                  <a (click)="toggleSubmenu('donorManagement')">
+                    <i class="ti ti-user-plus"></i>
+                    <span>Donor Management</span>
+                    <span class="menu-arrow"></span>
+                  </a>
+                  <ul [class.show]="isSubmenuOpen('donorManagement')">
+                    <li
+                      *ngIf="
+                        sidebarPermissionService.hasAccess('Donor', 'List')
+                      "
+                    >
+                      <a routerLink="/app/donors" routerLinkActive="active"
+                        >Donors</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-title" *ngIf="sidebarPermissionService.hasAnyAccessToFeature(['Bank'])">
+          <span>Cash Bank Management</span>
+        </li>
+        <li>
+          <ul>
+            <li>
+              <ul>
+                <li *ngIf="sidebarPermissionService.hasAccess('Bank', 'List')">
+                  <a routerLink="/app/banks" routerLinkActive="active">
+                    <i class="ti ti-building-bank"></i>
+                    <span>Bank</span>
+                  </a>
+                </li>
+                <li *ngIf="sidebarPermissionService.hasAccess('Opening Balance', 'List')">
+                  <a routerLink="/app/opening-balances" routerLinkActive="active">
+                    <i class="ti ti-building-bank"></i>
+                    <span>Opening Balance</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-title" *ngIf=" sidebarPermissionService.hasAnyAccessToFeature(['Income Category', 'Income'])">
+          <span>Income Management</span>
+        </li>
+        <li>
+          <ul>
+            <li>
+              <ul>
+                <li *ngIf="sidebarPermissionService.hasAccess('Income Category', 'List')">
+                  <a routerLink="/app/income-categories" routerLinkActive="active">
+                    <i class="ti ti-message-dollar"></i>
+                    <span>Income Category</span>
+                  </a>
+                </li>
+                <li *ngIf="sidebarPermissionService.hasAccess('Income', 'List')">
+                  <a routerLink="/app/incomes" routerLinkActive="active">
+                    <i class="ti ti-message-dollar"></i>
+                    <span>Income</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="menu-title"
+          *ngIf="
+            sidebarPermissionService.hasAnyAccessToFeature(['Expense Category'])
+          "
+        >
+        <li class="menu-title" *ngIf="sidebarPermissionService.hasAnyAccessToFeature(['Expense Category', 'Expense'])">
+          <span>Expense Management</span>
+        </li>
+        <li>
+          <ul>
+            <li>
+              <ul>
+                <li
+                  *ngIf="
+                    sidebarPermissionService.hasAccess(
+                      'Expense Category',
+                      'List'
+                    )
+                  "
+                >
+                  <a
+                    routerLink="/app/expense-categories"
+                    routerLinkActive="active"
+                  >
+                    <i class="ti ti-message-dollar"></i>
+                    <span>Expense Category</span>
+                  </a>
+                </li>
+                <li *ngIf="sidebarPermissionService.hasAccess('Expense', 'List')">
+                  <a routerLink="/app/expenses" routerLinkActive="active">
+                    <i class="ti ti-message-dollar"></i>
+                    <span>Expense</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-title">
+          <span>Reports & Analytics</span>
+        </li>
+        <li>
+          <ul>
+            <li>
+              <ul>
+                <li>
+                  <a routerLink="/app/reports" routerLinkActive="active">
+                    <i class="ti ti-clipboard"></i>
+                    <span>Reports</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

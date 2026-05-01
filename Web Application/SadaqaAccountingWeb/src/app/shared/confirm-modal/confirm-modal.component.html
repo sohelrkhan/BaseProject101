@@ -1,0 +1,36 @@
+<div
+  class="modal fade"
+  id="{{ id }}"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <span class="avatar avatar-xl mb-3" [ngClass]="[iconBackgroundColor, iconTextColor]">
+          <i [ngClass]="iconClass"></i>
+        </span>
+        <h4 class="mb-3">{{ header }}</h4>
+        <p class="mb-3">{{ message }}</p>
+        <div class="d-flex justify-content-center">
+          <a
+            href="javascript:void(0);"
+            class="btn btn-light me-3"
+            data-bs-dismiss="modal"
+            (click)="onCancel()">
+            {{ cancelButtonText }}
+          </a>
+          <a
+            class="btn"
+            [ngClass]="confirmButtonColor"
+            (click)="onConfirm()"
+            data-bs-dismiss="modal">
+            {{ confirmButtonText }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

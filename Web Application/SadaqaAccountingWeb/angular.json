@@ -1,0 +1,127 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "SadaqaAccountingWeb": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/sadaqaaccounting-web",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+              "node_modules/@ali-hm/angular-tree-component/css/angular-tree-component.css",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": false,
+            "ssr": {
+              "entry": "server.ts"
+            },
+            "allowedCommonJsDependencies": [
+              "moment",
+              "html2pdf.js",
+              "jspdf",
+              "canvg",
+              "core-js",
+              "@babel/runtime",
+              "raf",
+              "rgbcolor",
+              "qrcode"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10MB",
+                  "maximumError": "12MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "35kB",
+                  "maximumError": "45kB"
+                }
+              ],
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "outputHashing": "all",
+              "optimization": {
+                "styles": false
+              }
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "SadaqaAccountingWeb:build:production"
+            },
+            "development": {
+              "buildTarget": "SadaqaAccountingWeb:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": ["src/styles.scss"],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "c54f9eb4-425b-4eb5-a786-3c5a5002f851"
+  }
+}

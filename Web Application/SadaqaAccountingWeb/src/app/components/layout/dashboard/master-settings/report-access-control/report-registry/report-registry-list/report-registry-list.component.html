@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-md-12">
+            <div class="card shadow-lg mt-2">
+                <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+                    <h5>Report Registry List</h5>
+                    <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+                        <div class="dropdown me-3">
+                            <label for="moduleId" class="form-label">Module</label>
+                            <select class="js-example-placeholder-multiple select2" id="moduleId">
+                                <option [value]="-1">Select Module</option>
+                                <option *ngFor="let module of modules" [value]="module.id">{{ module.name }}</option>
+                            </select>
+                        </div>
+                        <div class="me-3">
+                            <label for="reportGroupName" class="form-label">Report Group</label>
+                            <select class="js-example-placeholder-multiple select2" id="reportGroupName">
+                                <option [value]="-1" selected>Select Report Group</option>
+                                <option *ngFor="let reportGroup of reportGroups" [value]="reportGroup.id">{{ reportGroup.name }}</option>
+                            </select>
+                        </div>     
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="custom-datatable-filter p-3">
+                        <div class="table-responsive" *ngIf="isTableReady">
+                            <table id="example" class="table table-hover table-bordered align-middle" *ngIf="isBrowser">
+                                <thead class="table-dark text-center align-middle">
+                                    <tr>
+                                        <th>Module Name</th>
+                                        <th>Report Code</th>
+                                        <th>Report Group</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of reportRegistries">
+                                        <td>{{ data.moduleName }}</td>
+                                        <td>{{ data.reportCode }}</td>
+                                        <td>{{ data.reportGroup }}</td>
+                                        <td>{{ data.name }}</td>
+                                        <td>
+                                            <span class="badge bg-success" *ngIf="data.statusId == 309">Active</span>
+                                            <span class="badge bg-danger" *ngIf="data.statusId == 310">Inactive</span>
+                                        </td>
+                                        <td>
+                                            <div class="hstack gap-2 fs-15 align-content-center justify-content-center">
+                                                <a data-bs-toggle="modal" data-bs-target="#update_report_registry_modal"
+                                                    class="btn btn-icon btn-sm btn-info rounded-pill"
+                                                    (click)="onClickUpdateReportRegistryModal(data.id)"
+                                                    *appCheckPermission="{ feature: 'Report Registry', action: 'Update' }">
+                                                    <i class="feather-edit"></i>
+                                                </a>
+                                                <a class="btn btn-icon btn-sm btn-danger rounded-pill"
+                                                    data-bs-toggle="modal" data-bs-target="#delete_report_registry_modal"
+                                                    (click)="onClickDeleteReportRegistryModal(data.id)"
+                                                    *appCheckPermission="{ feature: 'Report Registry', action: 'Delete' }">
+                                                    <i class="feather-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Report Registry Modal -->
+<app-confirm-modal [iconClass]="'ti ti-smart-home fs-36'" [header]="'Confirm Delete'"
+    [id]="'delete_report_registry_modal'" [message]="'You want to delete this?, this cant be undone once you delete.'"
+    [confirmButtonText]="'Yes, Delete'" [cancelButtonText]="'Cancel'" [confirmButtonColor]="'btn-danger'"
+    [iconBackgroundColor]="'bg-transparent-danger'" [iconTextColor]="'text-danger'"
+    (confirmAction)="onClickDeleteReportRegistry()"></app-confirm-modal>
+<!-- Update Report Registry Modal-->
+<div class="modal fade" id="update_report_registry_modal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update Report Registry</h4>
+                <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ti ti-x"></i>
+                </button>
+            </div>
+            <!-- Report Registry update component -->
+            <app-report-registry-update [selectedReportRegistryId]="updateReportRegistryId"
+                (updateSuccess)="onReportRegistryUpdated()"></app-report-registry-update>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+</ngx-spinner>

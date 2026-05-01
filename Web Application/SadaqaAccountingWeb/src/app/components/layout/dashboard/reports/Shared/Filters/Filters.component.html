@@ -1,0 +1,73 @@
+<div class="card shadow-lg mt-2">
+  <div class="card-header">
+    <h4>Filter Options</h4>
+  </div>
+  <div class="card-body">
+    <div class="row align-items-end">
+      <div class="col-lg-2 mb-3" *ngIf="showDateRange">
+        <label for="dateRangeSelect" class="form-label">Date Range</label>
+        <select id="dateRangeSelect" #dateRangeSelect class="form-select">
+          <option *ngFor="let option of dateRangeOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- From Date -->
+      <div class="col-lg-2" *ngIf="showFromDate">
+        <label class="form-label">From Date</label>
+        <div class="input-icon-end position-relative mb-3">
+          <input
+            type="text"
+            id="fromDate"
+            class="form-control datetimepicker"
+            [(ngModel)]="fromDateString"
+            autocomplete="off" />
+          <span class="input-icon-addon"><i class="ti ti-calendar"></i></span>
+        </div>
+      </div>
+
+      <!-- To Date -->
+      <div class="col-lg-2" *ngIf="showToDate">
+        <label class="form-label">To Date</label>
+        <div class="input-icon-end position-relative mb-3">
+          <input
+            type="text"
+            id="toDate"
+            class="form-control datetimepicker"
+            [(ngModel)]="toDateString"
+            autocomplete="off" />
+          <span class="input-icon-addon"><i class="ti ti-calendar"></i></span>
+        </div>
+      </div>
+
+      <!-- Event -->
+      <div class="col-lg-2 mb-3" *ngIf="showEvent">
+        <label class="form-label">Event</label>
+        <select id="eventSelect" #eventSelect class="form-select">
+          <option value="">All Events</option>
+          <option *ngFor="let event of events" [value]="event.id">
+            {{ event.name }}
+          </option>
+        </select>
+      </div>
+      
+      <!-- Donors -->
+      <div class="col-lg-2 mb-3" *ngIf="showDonor">
+        <label class="form-label">Donor</label>
+        <select id="donorSelect" #vendorSelect class="form-select">
+          <option value="">Select Donor</option>
+          <option *ngFor="let donor of donors" [value]="donor.id">
+            {{ donor.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col-auto mb-3">
+        <button class="btn btn-primary d-flex align-items-center" (click)="onSearchClick()">
+          <i class="ti ti-search me-2"></i>
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

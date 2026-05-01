@@ -1,0 +1,132 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Features</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li class="breadcrumb-item">Feature</li>
+            <li class="breadcrumb-item active" aria-current="page">Feature</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+        <div class="mb-2">
+          <a routerLink="/app/feature/create" class="btn btn-primary d-flex align-items-center" *appCheckPermission="{ feature: 'Feature', action: 'Create' }">
+            <i class="ti ti-circle-plus me-2"></i>
+            Create Feature
+          </a>
+        </div>
+        <div class="ms-2 head-icons">
+          <a href="javascript:void(0);" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
+            <i class="ti ti-chevrons-up"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+        <h5 class="mb-0">Feature List</h5>
+        <div class="d-flex my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+          <div class="dropdown me-3">
+            <label class="form-label" for="moduleId">Module </label>
+            <select class="js-example-placeholder select2" id="moduleId">
+              <option [value]="-1">Select Module</option>
+              <option *ngFor="let module of modules" [value]="module.id">{{ module.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="custom-datatable-filter table-responsive p-3" *ngIf="isTableReady">
+          <table id="example" class="table table-bordered" *ngIf="isBrowser">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>Module</th>
+                <th>Name</th>
+                <th>Linked Table</th>
+                <th>Linked Controller</th>
+                <th>Status</th>
+                <th>Has Workflow</th>
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let feature of features">
+                <td>
+                  {{ feature.moduleName }}
+                </td>
+                <td>
+                  {{ feature.name }} ({{ feature.code }})
+                </td>
+                <td>
+                  {{ feature.linkedTableName }}
+                </td>
+                <td>
+                  {{ feature.linkedControllerName }}
+                </td>
+                <td>
+                  {{ feature.statusName }}
+                </td>
+                <td class="text-center">
+                  <div class="hstack gap-2 fs-15 align-content-center justify-content-center">
+                    <a
+                      class="btn btn-icon btn-sm btn-info rounded-pill"
+                      routerLink="/app/feature/update/{{ feature.encryptedId }}"
+                      *appCheckPermission="{ feature: 'Feature', action: 'Update' }">
+                      <i class="feather-edit"></i>
+                    </a>
+                    <a
+                      data-bs-toggle="modal"
+                      data-bs-target="#delete_feature_modal"
+                      class="btn btn-icon btn-sm btn-danger rounded-pill"
+                      (click)="onClickOpenDeleteModal(feature.encryptedId)"
+                      *appCheckPermission="{ feature: 'Feature', action: 'Delete' }">
+                      <i class="feather-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Item Issue Modal -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="modal fade" id="delete_feature_modal">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <span class="avatar avatar-xl bg-transparent-danger text-danger mb-3">
+              <i class="ti ti-trash-x fs-36"></i>
+            </span>
+            <h4 class="mb-1">Confirm Delete</h4>
+            <p class="mb-3">You want to delete this items, this cant be undone once you delete.</p>
+            <div class="d-flex justify-content-center">
+              <a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">
+                Cancel
+              </a>
+              <a
+                class="btn btn-danger"
+                (click)="onClickDelete()"
+                *appCheckPermission="{ feature: 'Feature', action: 'Delete' }" data-bs-dismiss="modal">
+                Yes, Delete
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

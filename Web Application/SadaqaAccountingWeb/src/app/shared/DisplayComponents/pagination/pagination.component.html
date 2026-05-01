@@ -1,0 +1,96 @@
+<!-- 
+  PAGINATION COMPONENT TEMPLATE
+  ------------------------------------------
+  Displays:
+  - Pagination info (showing X to Y of total entries)
+  - Page navigation controls (First, Previous, Next, Last)
+  - Page number buttons with ellipsis
+  - Page size selector (TomSelect-enhanced dropdown)
+  - Direct page jump input
+-->
+
+<div class="pagination-container">
+  <!-- Pagination summary info -->
+  <div class="pagination-info">
+    <span>Showing {{ startItem }} to {{ endItem }} of {{ totalRecords }} entries</span>
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="pagination-controls">
+    <!-- First Page -->
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === 1 || loading"
+      (click)="goToPage(1)"
+      title="First page">
+      <span class="btn-text">First</span>
+      <span class="btn-icon">⟨⟨</span>
+    </button>
+
+    <!-- Previous Page -->
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === 1 || loading"
+      (click)="goToPage(currentPage - 1)"
+      title="Previous page">
+      <span class="btn-text">Previous</span>
+      <span class="btn-icon">⟨</span>
+    </button>
+
+    <!-- Dynamic page numbers -->
+    <div class="pagination-numbers">
+      <button
+        *ngFor="let page of visiblePages"
+        class="pagination-btn page-number"
+        [class.active]="page === currentPage"
+        [disabled]="loading"
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+
+      <!-- Ellipsis for undisplayed pages -->
+      <span *ngIf="showEllipsisEnd" class="ellipsis">...</span>
+    </div>
+
+    <!-- Next Page -->
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === totalPages || loading"
+      (click)="goToPage(currentPage + 1)"
+      title="Next page">
+      <span class="btn-icon">⟩</span>
+      <span class="btn-text">Next</span>
+    </button>
+
+    <!-- Last Page -->
+    <button
+      class="pagination-btn"
+      [disabled]="currentPage === totalPages || loading"
+      (click)="goToPage(totalPages)"
+      title="Last page">
+      <span class="btn-icon">⟩⟩</span>
+      <span class="btn-text">Last</span>
+    </button>
+  </div>
+
+  <!-- Page size dropdown (TomSelect applies here) -->
+  <div class="page-size-selector">
+    <label>Rows per page:</label>
+    <select #pageSizeSelect>
+      <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+    </select>
+  </div>
+
+  <!-- Manual page jump input -->
+  <div class="page-jump">
+    <label>Go to page:</label>
+    <input
+      type="number"
+      [value]="currentPage"
+      [min]="1"
+      [max]="totalPages"
+      [disabled]="loading"
+      (keyup.enter)="onPageJump($event)"
+      class="page-input" />
+  </div>
+</div>

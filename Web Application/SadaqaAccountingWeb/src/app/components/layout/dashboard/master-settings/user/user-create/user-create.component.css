@@ -1,0 +1,13 @@
+.form-control:focus,
+.form-control.is-invalid:focus {
+  box-shadow: none;
+}
+
+.input-group .form-control {
+  border-right: none;
+}
+
+.input-group .input-group-text {
+  background-color: transparent;
+  border-left: none;
+}

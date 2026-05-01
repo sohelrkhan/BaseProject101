@@ -1,0 +1,49 @@
+<div class="row" *ngIf="isProfilePictureUpload">
+  <div class="col-md-12">
+    <span class="avatar avatar-xl bg-transparent-danger text-primary m-3">
+      <i class="ti ti-upload fs-36"></i>
+    </span>
+
+    <form [formGroup]="imageForm" (ngSubmit)="uploadImage()">
+      <input
+        type="file"
+        name="imageFile"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        class="form-control"
+        id="imageFile" />
+      <div *ngIf="previewUrl" class="preview">
+        <img
+          [src]="previewUrl"
+          alt="Preview"
+          width="100%"
+          style="margin-top: 10px; height: 250px; width: 200px; object-fit: center" />
+      </div>
+      <div style="margin-top: 20px">
+        <a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</a>
+        <button class="btn btn-primary" [disabled]="!selectedFile" data-bs-dismiss="modal">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row" *ngIf="isDefaultUpload">
+  <div class="col-md-12">
+    <input
+      type="file"
+      id="imageFile"
+      name="imageFile"
+      (change)="onFileSelected($event)"
+      class="form-control"
+      accept="image/*" />
+    <div *ngIf="previewUrl" class="preview">
+      <img
+        [src]="previewUrl"
+        alt="Preview"
+        width="100%"
+        style="margin-top: 10px; height: 100px; width: 100px; object-fit: center" />
+    </div>
+  </div>
+</div>

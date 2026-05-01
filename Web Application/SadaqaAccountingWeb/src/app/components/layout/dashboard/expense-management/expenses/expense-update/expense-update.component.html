@@ -1,0 +1,102 @@
+<div class="page-wrapper vh-100 d-flex flex-column justify-content-between">
+  <div class="content flex-fill h-100">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Expense Management</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li class="breadcrumb-item"><a routerLink="/app/expenses">Expenses</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Expense</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-3">
+      <div class="col-md-12">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="fas fa-plus me-2"></i>
+            <h5 class="mb-0 text-white">Update Expense</h5>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" autocomplete="off">
+              <div class="col-md-3">
+                <label class="form-label" for="expenseCategoryId">Expense Category <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder select2" id="expenseCategoryId">
+                  <option *ngFor="let expenseCategory of expenseCategories" [value]="expenseCategory.id">{{ expenseCategory.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="eventId">Event </label>
+                <select class="js-example-placeholder select2" id="eventId">
+                  <option [value]="-1">Select Event</option>
+                  <option *ngFor="let event of events" [value]="event.id">{{ event.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="paymentModeId">Payment Modes <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder select2" id="paymentModeId">
+                  <option *ngFor="let paymentMode of paymentModes" [value]="paymentMode.id">{{ paymentMode.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3" [hidden]="!isSelectBank">
+                <label class="form-label" for="bankId">Bank <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder select2" id="bankId">
+                  <option [value]="-1">Select Bank</option>
+                  <option *ngFor="let bank of banks" [value]="bank.id">{{ bank.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3" [hidden]="!isSelectCash">
+                <label class="form-label" for="cashId">Cash <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder select2" id="cashId">
+                  <option [value]="-1">Select Cash</option>
+                  <option *ngFor="let cash of cashes" [value]="cash.id">{{ cash.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="amount" class="form-label">Amount <span style="color: red">*</span></label>
+                <input type="number" id="amount" name="amount" [(ngModel)]="expenseUpdateModel.amount" class="form-control" placeholder="Enter amount" />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" for="expenseDateString">Expense Date <span style="color: red">*</span></label>
+                <div class="input-icon-end position-relative">
+                  <input type="text" id="expenseDateString" name="expenseDateString" [(ngModel)]="expenseUpdateModel.expenseDateString" class="form-control datetimepicker"
+                    placeholder="dd/mm/yyyy" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="description" class="form-label">Description </label>
+                <textarea id="description" name="description" [(ngModel)]="expenseUpdateModel.description" class="form-control" placeholder="Enter description"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <div class="col-12">
+              <div class="modal-footer">
+                <button type="button" routerLink="/app/expenses" class="btn btn-light me-2">
+                  <i class="ti ti-arrow-back-up me-1"></i>
+                  Back
+                </button>
+                <button type="button" (click)="onClickUpdate()" class="btn btn-primary">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,116 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Administration</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a>
+                <i class="ti ti-smart-home me-1"></i>
+                Approval / WorkFlow
+              </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Feature</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <ul class="nav nav-tabs nav-tabs-solid bg-transparent border-bottom mb-3">
+      <li class="nav-item">
+        <a class="nav-link active">
+          <i class="ti ti-settings me-2"></i>
+          Features
+        </a>
+      </li>
+    </ul>
+    <div class="row" *ngIf="isBrowser">
+      <div class="col-xl-3 theiaStickySidebar" *ngIf="isBrowser">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column p-0">
+            <div class="p-3 border-bottom bg-white sticky-top">
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0">
+                  <i class="ti ti-search text-muted"></i>
+                </span>
+                <input
+                  type="text"
+                  id="featureName"
+                  name="featureName"
+                  class="form-control border-start-0"
+                  placeholder="Search Feature"
+                  [(ngModel)]="featureName"
+                  (ngModelChange)="onChangeFeatureName($event)" />
+              </div>
+            </div>
+            <div class="flex-grow-1 overflow-auto px-3 py-2 feature-list">
+              <div *ngFor="let feature of filterFeatures" class="position-relative" ngSkipHydration>
+                <a
+                  class="d-flex justify-content-between align-items-center rounded py-2 px-2"
+                  [class.bg-light]="selectedFeatureId === feature.id"
+                  [class.border]="selectedFeatureId === feature.id"
+                  [class.border-primary]="selectedFeatureId === feature.id"
+                  (click)="toggleWorkflowSettings(feature.id)">
+                  <span>{{ feature.name }}</span>
+                  <span
+                    class="ms-auto text-muted"
+                    (click)="$event.stopPropagation()"
+                    *appCheckPermission="{ feature: 'Feature', action: 'Update' }">
+                    <a
+                      [routerLink]="['/app/feature/update', feature.encryptedId]"
+                      class="text-decoration-none text-secondary"
+                      title="Edit Feature">
+                      <i class="ti ti-pencil"></i>
+                    </a>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="p-3 border-top bg-white sticky-bottom">
+              <a
+                class="d-inline-flex align-items-center rounded py-2 px-3 w-100 justify-content-center btn btn-outline-info"
+                routerLink="/app/feature/create"
+                *appCheckPermission="{ feature: 'Feature', action: 'Create' }">
+                <i class="ti ti-circle-plus me-2"></i>
+                Add Feature
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-xl-9"
+        *ngIf="selectedFeatureId != null || selectedFeatureId > 0; else selectFeature">
+        <app-feature-workflow-setting
+          [featureId]="selectedFeatureId"></app-feature-workflow-setting>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #selectFeature>
+  <div class="col-md-7 ms-4">
+    <div class="card br-0">
+      <div class="card-header">
+        <div class="bar">
+          Workflow Feature Details
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="card-body p-6">
+        <h6 class="card-subtitle mb-2 text-dark fw-bold">No feature Selected .</h6>
+        <p class="card-text">Please Select a Feature to set up feature Workflow Setting .</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin"
+  [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

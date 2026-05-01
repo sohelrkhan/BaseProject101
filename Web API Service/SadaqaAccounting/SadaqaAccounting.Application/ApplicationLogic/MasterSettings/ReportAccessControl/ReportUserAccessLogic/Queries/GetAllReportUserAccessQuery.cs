@@ -1,0 +1,34 @@
+﻿namespace SadaqaAccounting.Application.ApplicationLogic.MasterSettings.ReportAccessControl.ReportUserAccessLogic.Queries
+{
+    public class GetAllReportUserAccessQuery : IRequest<ICollection<ReportUserAccessGridModel>>
+    {
+        public class Handler : IRequestHandler<GetAllReportUserAccessQuery, ICollection<ReportUserAccessGridModel>>
+        {
+            private readonly IReportUserAccessRepository _reportUserAccessRepository;
+            private readonly IMapper _mapper;
+            private readonly IHttpContextAccessor _httpContextAccessor;
+
+            public Handler(IReportUserAccessRepository reportUserAccessRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+            {
+                _reportUserAccessRepository = reportUserAccessRepository;
+                _mapper = mapper;
+                _httpContextAccessor = httpContextAccessor;
+            }
+
+            public async Task<ICollection<ReportUserAccessGridModel>> Handle(GetAllReportUserAccessQuery request, CancellationToken cancellationToken)
+            {
+                // Retrieve the user's ID from the current HTTP context
+                var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value;
+
+                // Check if the user ID is null or not
+                if (string.IsNullOrEmpty(userId))
+                    throw new UnauthorizedAccessException(ProvideErrorMessage.UserNotAuthenticated);
+
+                var getReportUserAccesses = await _reportUserAccessRepository.GetAllAsync();
+                var mapReportUserAccesses = _mapper.Map<ICollection<ReportUserAccessGridModel>>(getReportUserAccesses);
+
+                return mapReportUserAccesses;
+            }
+        }
+    }
+}

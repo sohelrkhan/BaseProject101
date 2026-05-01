@@ -1,0 +1,160 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Employee</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Employee List</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+        <div class="mb-2">
+          <a
+            class="btn btn-primary d-flex align-items-center"
+            routerLink="/app/employee/create"
+            *appCheckPermission="{ feature: 'Employee', action: 'Create' }">
+            <i class="ti ti-circle-plus me-2"></i>
+            Add Employee
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div
+        class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+        <h5>Employee List</h5>
+      </div>
+      <div class="card-body p-0">
+        <!-- Table Component -->
+        <app-table
+          [columns]="tableColumns"
+          [data]="employees"
+          [totalRecords]="totalRecords"
+          [loading]="loading"
+          [currentPage]="currentTablePage"
+          [pageSize]="tablePageSize"
+          [serverSide]="true"
+          [actionsTemplate]="actionsTemplate"
+          (dataRequest)="onTableDataRequest($event)"
+          (rowAction)="onTableRowAction($event)"></app-table>
+
+        <!-- Table Pagination -->
+        <app-pagination
+          [totalRecords]="totalRecords"
+          [pageSize]="tablePageSize"
+          [currentPage]="currentTablePage"
+          [pageSizeOptions]="[5, 10, 25, 50, 100]"
+          [maxVisiblePages]="5"
+          [loading]="loading"
+          (pageChange)="onTablePaginationChange($event)"></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Employee Modal -->
+<div
+  class="modal fade"
+  id="delete_employee_modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <span class="avatar avatar-xl bg-transparent-danger text-danger mb-3">
+          <i class="ti ti-trash-x fs-36"></i>
+        </span>
+        <h4 class="mb-1">Confirm Delete</h4>
+        <p class="mb-3">
+          You want to delete all the marked items, this cant be undone once you delete.
+        </p>
+        <div class="d-flex justify-content-center">
+          <a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">
+            Cancel
+          </a>
+          <a
+            class="btn btn-danger"
+            (click)="onClickDeleteEmployee()"
+            *appCheckPermission="{ feature: 'Employee', action: 'Delete' }">
+            Yes, Delete
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Create Employee User Modal -->
+<div
+  class="modal fade"
+  id="add_employee_user_modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <span class="avatar avatar-xl bg-transparent-primary text-primary mb-3">
+          <i class="ti ti-user fs-36"></i>
+        </span>
+        <h4 class="mb-1">Confirm</h4>
+        <p class="mb-3">You want to add this employee?</p>
+        <div class="d-flex justify-content-center">
+          <a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">
+            Cancel
+          </a>
+          <a
+            class="btn btn-primary"
+            (click)="onClickCreateUser()"
+            *appCheckPermission="{ feature: 'Employee', action: 'Create' }">
+            Yes, Create User
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="timer"
+  [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>
+
+<ng-template #actionsTemplate let-row let-rowAction="rowAction">
+  <ng-container>
+    @if (!row.hasUserId) {
+      <a
+        class="btn btn-icon btn-sm btn-secondary"
+        data-bs-toggle="modal"
+        data-bs-target="#add_employee_user_modal"
+        (click)="onClickCreateUserModal(row.id)"
+        *appCheckPermission="{ feature: 'Employee', action: 'Create' }">
+        <i class="feather-user"></i>
+      </a>
+    }
+    <!-- Edit Button (Primary) -->
+    <button
+      *appCheckPermission="{ feature: 'Employee', action: 'Update' }"
+      class="btn btn-sm btn-warning me-1"
+      routerLink="/app/employee-details/{{ row.encryptedId }}"
+      title="Edit">
+      <i class="ti ti-eye"></i>
+    </button>
+
+    <!-- Delete Button (Danger) -->
+    <button
+      *appCheckPermission="{ feature: 'Employee', action: 'Delete' }"
+      class="btn btn-sm btn-danger"
+      data-bs-toggle="modal"
+      data-bs-target="#delete_employee_modal"
+      (click)="onClickOpenDeleteEmployeeModal(row.encryptedId)"
+      title="Delete">
+      <i class="feather-trash"></i>
+    </button>
+  </ng-container>
+</ng-template>

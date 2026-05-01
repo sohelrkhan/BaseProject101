@@ -1,0 +1,123 @@
+<div class="modern-header">
+  <div class="header-container">
+    <div class="header-left">
+      <div class="logo-section">
+        <a routerLink="/dashboard" class="logo-link">
+          <div class="logo-wrapper">
+            <i class="ti ti-building-bank logo-icon"></i>
+            <span class="logo-text">SADAQAH</span>
+          </div>
+        </a>
+      </div>
+      <button id="toggle_btn" class="sidebar-toggle" (click)="toggleSidebar()">
+        <i class="ti ti-menu-2"></i>
+      </button>
+      <div class="account-unit-chip" *ngIf="accountUnitName">
+        <i class="ti ti-building"></i>
+        <span class="label">Account:</span>
+        <span class="value">{{ accountUnitName }}</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-actions">
+        <button class="action-btn fullscreen-btn" (click)="toggleFullscreen()" title="Toggle Fullscreen" type="button">
+          <i class="ti ti-maximize"></i>
+        </button>
+        <div class="dropdown action-dropdown">
+          <button class="action-btn notification-btn" data-bs-toggle="dropdown" title="Notifications" type="button" aria-expanded="false">
+            <i class="ti ti-bell"></i>
+            <span class="notification-badge pulse" *ngIf="unreadNotifications && unreadNotifications.length > 0">
+              {{ unreadNotifications.length }}
+            </span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end notifications-menu">
+            <div class="dropdown-header">
+              <div class="notification-header">
+                <h6 class="dropdown-title">Notifications</h6>
+                <button class="mark-all-read" (click)="onClickReadAllNotification()" type="button" *ngIf="unreadNotifications && unreadNotifications.length > 0">
+                  Mark all read
+                </button>
+              </div>
+            </div>
+            <div class="notifications-list">
+              <div class="notification-item" *ngFor="let notification of unreadNotifications; trackBy: trackNotification">
+                <div class="notification-avatar">
+                  <div class="avatar-circle">
+                    <i class="ti ti-bell"></i>
+                  </div>
+                </div>
+                <div class="notification-content">
+                  <h6 class="notification-title">{{ notification.title }}</h6>
+                  <p class="notification-message">{{ notification.message }}</p>
+                  <span class="notification-time">
+                    {{ notification.createdDateTime | date: "short" }}
+                  </span>
+                </div>
+                <button class="notification-action" type="button">
+                  <i class="ti ti-x"></i>
+                </button>
+              </div>
+              <div class="empty-notifications" *ngIf="!unreadNotifications || unreadNotifications.length === 0">
+                <i class="ti ti-bell-off"></i>
+                <p>No new notifications</p>
+              </div>
+            </div>
+            <div class="dropdown-footer">
+              <a href="javascript:void(0)" class="view-all-link">View all notifications</a>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown profile-dropdown">
+          <button class="profile-btn" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+            <div class="profile-avatar">
+              <img [src]="getUserAvatarUrl()" alt="Profile" class="avatar-img" onerror="this.src='assets/img/profiles/avatar-12.jpg'" />
+              <div class="online-status"></div>
+            </div>
+            <div class="profile-info">
+              <span class="profile-name">{{ getUserDisplayName() }}</span>
+            </div>
+            <i class="ti ti-chevron-down profile-arrow"></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end profile-menu">
+            <div class="dropdown-header">
+              <div class="profile-card">
+                <div class="profile-avatar-large">
+                  <img [src]="getUserAvatarUrl()" alt="Profile" onerror="this.src='assets/img/profiles/avatar-12.jpg'" />
+                </div>
+                <div class="profile-details">
+                  <h6 class="profile-name">{{ getUserDisplayName() }}</h6>
+                  <p class="profile-email">{{ getUserEmail() }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-body">
+              <a class="dropdown-item" [routerLink]="['/app/employee-details', getEmployeeId()]" *ngIf="getEmployeeId()">
+                <i class="ti ti-user"></i>
+                <span>My Profile</span>
+              </a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                <i class="ti ti-settings"></i>
+                <span>Settings</span>
+              </a>
+              <a class="dropdown-item" href="javascript:void(0)">
+                <i class="ti ti-help"></i>
+                <span>Help & Support</span>
+              </a>
+            </div>
+            <div class="dropdown-footer">
+              <button class="logout-btn" (click)="onClickLogout($event)" type="button">
+                <i class="ti ti-logout"></i>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="mobile-menu-btn d-lg-none" id="mobile_btn" type="button">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="page-wrapper d-flex flex-column justify-content-between">
+  <div class="content flex-fill">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Administration</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href><i class="ti ti-smart-home"></i></a>
+            </li>            
+            <li class="breadcrumb-item active" aria-current="page" routerLink="/app/employees">Employee List</li>
+            <li class="breadcrumb-item active" aria-current="page">Create Employee</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-3">
+      <div class="col-md-12">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="fas fa-plus me-2"></i>
+            <h5 class="mb-0 text-white">Create Employee</h5>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" autocomplete="off">
+              <div class="col-md-12 mb-3">
+                <div class="row text-center justify-content-center align-items-center">
+                  <div class="col-md-3">
+                    <label for="logo" class="form-label fw-semibold">Employee Image</label>
+                    <div class="logo-upload text-center border rounded-4 p-3 bg-white shadow-sm">
+                      <img [src]="previewUrl || 'assets/img/profiles/avatar-12.jpg'" class="img-fluid rounded-circle border mb-2" style="width: 100px; height: 100px;" alt="Preview" />
+                      <div>
+                        <button type="button" class="btn btn-outline-primary btn-sm rounded-pill" (click)="triggerFileInput()">
+                          <i class="ti ti-upload me-1"></i> Upload Image
+                        </button>
+                      </div>
+                      <input type="file" id="image" name="image" class="form-control" hidden #image (change)="onFileChange($event)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="name" class="form-label">Full Name <span class="text-danger fw-bold">*</span></label>
+                <input type="text" id="fullName" name="fullName" [(ngModel)]="employeeCreateModel.fullName" class="form-control" placeholder="Enter full name" />
+              </div>
+              <div class="col-md-3">
+                <label for="phoneNumber" class="form-label">Phone Number <span class="text-danger fw-bold">*</span></label>
+                <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="employeeCreateModel.phoneNumber" class="form-control" placeholder="+8801711111111" />
+              </div>
+              <div class="col-md-3">
+                <label for="email" class="form-label">Email <span class="text-danger fw-bold">*</span></label>
+                <input type="email" id="email" name="email" [(ngModel)]="employeeCreateModel.email" class="form-control" placeholder="example@email.com" />
+              </div>
+              <div class="col-md-3">
+                <label for="companyId" class="form-label">Company <span class="text-danger fw-bold">*</span></label>
+                <select class="js-example-placeholder-multiple select2" id="companyId">
+                  <option [value]="-1" selected>Select Company</option>
+                  <option *ngFor="let company of companies" [value]="company.id">{{ company.name }}</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="address" class="form-label">Address</label>
+                <textarea id="address" name="address" [(ngModel)]="employeeCreateModel.address" class="form-control" placeholder="Enter full address."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <div class="col-12">
+              <div class="modal-footer">
+                <button type="button" routerLink="/app/employees" class="btn btn-light me-2">
+                  <i class="ti ti-arrow-back-up me-1"></i>
+                  Back
+                </button>
+                <button type="button" (click)="onClickCreateEmployee()" class="btn btn-primary" *appCheckPermission="{ feature: 'Employee', action: 'Create' }">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Create
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

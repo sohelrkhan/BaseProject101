@@ -1,0 +1,175 @@
+<div class="page-wrapper d-flex flex-column justify-content-between">
+    <div class="content flex-fill">
+        <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+            <div class="my-auto mb-2">
+                <h2 class="mb-1">Report</h2>
+                <nav>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="index.html">
+                                <i class="ti ti-smart-home me-1"></i>
+                                Reports
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Income Expense Report</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+                <div class="mb-2">
+                    <div class="me-3">
+                        <div class="dropdown">
+                            <a href="javascript:void(0);"
+                                class="dropdown-toggle btn btn-white d-inline-flex align-items-center"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-file-export me-1"></i>
+                                Export
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end p-3">
+                                <li>
+                                    <a class="dropdown-item rounded-1" (click)="downloadReport('pdf')">
+                                        <i class="ti ti-file-type-pdf me-1"></i>
+                                        Export as PDF
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item rounded-1" (click)="downloadReport('excel')">
+                                        <i class="ti ti-file-type-xls me-1"></i>
+                                        Export as Excel
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="ms-2 head-icons">
+                    <a href="javascript:void(0);" class data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-original-title="Collapse" id="collapse-header">
+                        <i class="ti ti-chevrons-up"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Filter Section -->
+                <app-Filters [showDateRange]="true" [showFromDate]="true" [showToDate]="true" [showEvent]="true"
+                    (filterChanged)="onFilterChanged($event)"></app-Filters>
+
+                <!-- Report Section -->
+                <div class="card shadow-lg mt-2">
+                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+                        <h5>Income Expense Report</h5>
+                        <div class="d-flex align-items-center gap-3">
+
+                            <div class="text-muted">
+                                <small>Duration: {{ getFromDate() }} To {{ getToDate() }}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+                                    <h5>Income Summary</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive" >
+                            <table id="incomeTbl" class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Date</th>
+                                        <th>Source Of Income</th>
+                                        <th class="text-end">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let data of responseModel.incomeList; let i = index;">
+                                        <tr class="table-light">
+                                            <td> <a>{{i + 1}}</a> </td>
+                                            <td class="text-start"> <a>{{data.receiptDate | ordinaldate}}</a> </td>
+                                            <td class="text-start"> <a>{{data.incomeCategoryName}}</a> </td>
+                                            <td class="text-end"> <a>{{data.amount| number: "1.2-2"}}</a> </td>
+                                        </tr>
+                                    </ng-container>
+                                    <!-- Always show total after list -->
+                                     <tr
+                                        class="table-light"
+                                        style="background: aliceblue !important; font-weight: bold">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="ps-5 text-end">Total</td>
+                                        <td class="text-end">
+                                        {{ responseModel.totalIncome | number: "1.2-2" }}
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                          </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+                                    <h5>Expense Summary</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="expenseTbl" class="table table-bordered">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>SL</th>
+                                                    <th>Date</th>
+                                                    <th>Purpose</th>
+                                                    <th class="text-end">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let data of responseModel.expenseList; let i = index">
+                                                    <tr>
+                                                        <td>{{ i + 1 }}</td>
+                                                        <td class="text-start">{{ data.expenseDate | ordinaldate }}</td>
+                                                        <td class="text-start">{{ data.expenseCategoryName }}</td>
+                                                        <td class="text-end">{{ data.amount | number: "1.2-2" }}</td>
+                                                    </tr>
+                                                </ng-container>
+
+                                                <tr
+                                                    class="table-light"
+                                                    style="background: aliceblue !important; font-weight: bold">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="ps-5 text-end">Total</td>
+                                                    <td class="text-end">
+                                                    {{ responseModel.totalExpense | number: "1.2-2" }}
+                                                    </td>
+                                                </tr>
+                                                <!-- Always show total after list -->
+                                                <!-- <tr *ngIf="responseModel?.expenseList?.length" style="color: gray;">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-end"><b>Total</b></td>
+                                                    <td class="text-end"><b>{{ totalExpense.toFixed() }}</b></td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+</ngx-spinner>

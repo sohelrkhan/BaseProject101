@@ -1,0 +1,63 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Administration</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li routerLink="/app/users" class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active" aria-current="page">Update</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-3">
+      <div class="col-md-12">
+        <div class="card shadow-lg">
+          <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="fas fa-cogs me-2"></i>
+            <h5 class="mb-0 text-white">Update User</h5>
+          </div>
+          <div class="card-body">
+            <form class="row g-3" autocomplete="off">
+              <div class="col-md-4">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" id="fullName" name="fullName" [(ngModel)]="userUpdateModel.fullName" class="form-control" />
+              </div>
+              <div class="col-md-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="userUpdateModel.email" class="form-control" />
+              </div>
+              <div class="col-md-4 mt-5">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="lockoutEnabled" name="lockoutEnabled" [(ngModel)]="userUpdateModel.lockoutEnabled" />
+                  <label class="form-check-label">Enable Lock Out</label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <div class="col-12">
+              <div class="modal-footer">
+                <button type="button" routerLink="/app/users" class="btn btn-light me-2">
+                  <i class="ti ti-arrow-back-up me-1"></i>
+                  Back
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="onClickUpdateUser()" *appCheckPermission="{ feature: 'User', action: 'Update' }">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

@@ -1,0 +1,244 @@
+<!-- 
+  GRID CONTAINER
+  Root element that wraps the entire grid component
+-->
+<div class="grid-container">
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       GRID HEADER - Search & Controls Section
+       ═══════════════════════════════════════════════════════════════════════════ -->
+  <div class="grid-header">
+    <!-- 
+      SEARCH BOX
+      Allows users to filter grid items by searching
+    -->
+    <div class="search-box">
+      <!-- 
+        SEARCH INPUT
+        #searchInputElement: Template reference variable for accessing this element in component
+        [(ngModel)]: Two-way data binding - syncs input value with searchInput property
+        (keypress): Event binding - calls onSearchKeyPress() on every key press
+        [disabled]: Property binding - disables input when loading is true
+      -->
+      <input
+        #searchInputElement
+        type="text"
+        placeholder="Search... (Press Enter)"
+        [(ngModel)]="searchInput"
+        (keypress)="onSearchKeyPress($event)"
+        [disabled]="loading"
+        class="search-input" />
+
+      <!-- 
+        SEARCH ICON
+        Clickable icon to trigger search (alternative to pressing Enter)
+        (click): Event binding - calls onSearchIconClick() when clicked
+      -->
+      <span class="search-icon" (click)="onSearchIconClick()">
+        <i class="ti ti-search"></i>
+      </span>
+
+      <!-- 
+        CLEAR SEARCH ICON (X button)
+        *ngIf: Structural directive - only renders if searchInput has a value
+        (click): Event binding - calls clearSearch() to reset search
+      -->
+      <span *ngIf="searchInput" class="clear-icon" (click)="clearSearch()">✕</span>
+    </div>
+
+    <!-- 
+      GRID CONTROLS SECTION
+      Contains sort and column layout controls
+    -->
+    <div class="grid-controls">
+      <!-- 
+        SORT CONTROL
+        *ngIf: Only shows if sortOptions array has items (parent must provide sort options)
+      -->
+      <div class="sort-control" *ngIf="sortOptions.length > 0">
+        <label>Sort by:</label>
+
+        <!-- 
+          SORT DROPDOWN
+          #sortSelect: Template reference variable (accessed via @ViewChild in component)
+          This gets enhanced by TomSelect library in ngAfterViewInit
+          Component listens to onChange event to handle sort selection
+        -->
+        <select #sortSelect>
+          <!-- Default "None" option with empty value -->
+          <option [value]="''">None</option>
+
+          <!-- 
+            Dynamic options from parent's sortOptions array
+            *ngFor: Loops through sortOptions array
+            [value]: Property binding - sets option value to field name
+            {{ opt.label }}: Interpolation - displays human-readable label
+          -->
+          <option *ngFor="let opt of sortOptions" [value]="opt.field">
+            {{ opt.label }}
+          </option>
+        </select>
+
+        <!-- 
+          SORT ORDER TOGGLE BUTTON
+          *ngIf: Only shows when a sort field is selected
+          [class.sort-asc]: Dynamic class - adds class when sortOrder is 'asc'
+          [class.sort-desc]: Dynamic class - adds class when sortOrder is 'desc'
+          (click): Calls toggleSortOrder() to switch between asc/desc
+          {{ }}: Interpolation - displays different text based on sortOrder
+        -->
+        <button
+          *ngIf="selectedSortField"
+          class="sort-order-btn"
+          [class.sort-asc]="sortOrder === 'asc'"
+          [class.sort-desc]="sortOrder === 'desc'"
+          (click)="toggleSortOrder()">
+          {{ sortOrder === "asc" ? "↑ Asc" : "↓ Desc" }}
+        </button>
+      </div>
+
+      <!-- 
+        VIEW CONTROL (Column Layout Selector)
+        Allows users to choose grid layout (1-6 columns)
+      -->
+      <div class="view-control">
+        <label>Columns:</label>
+
+        <!-- 
+          COLUMNS DROPDOWN
+          #columnsSelect: Template reference variable (accessed via @ViewChild)
+          Enhanced by TomSelect library in ngAfterViewInit
+          Options hardcoded from 1 to 6 columns
+          [value]: Property binding - sets the numeric value for each option
+        -->
+        <select #columnsSelect>
+          <option [value]="1">1</option>
+          <option [value]="2">2</option>
+          <option [value]="3">3</option>
+          <option [value]="4">4</option>
+          <option [value]="5">5</option>
+          <option [value]="6">6</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════
+       GRID CONTENT - Main Display Area
+       ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- 
+    GRID CONTENT CONTAINER
+    [style.grid-template-columns]: Property binding - dynamically sets CSS Grid columns
+    Example: gridTemplateColumns = "repeat(3, 1fr)" creates 3 equal-width columns
+    This value is calculated in updateGridColumns() method
+  -->
+  <div class="grid-content" [style.grid-template-columns]="gridTemplateColumns">
+    <!-- 
+      LOADING STATE
+      *ngIf: Structural directive - only renders when loading is true
+      Shows spinner and message while data is being fetched
+    -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <span>Loading items...</span>
+    </div>
+
+    <!-- 
+      EMPTY STATE
+      *ngIf: Shows when not loading AND displayItems array is empty
+      Different messages shown based on whether search is active
+    -->
+    <div *ngIf="!loading && displayItems.length === 0" class="empty-state">
+      <!-- Icon -->
+      <span class="empty-icon"><i class="ti ti-database-x"></i></span>
+
+      <!-- 
+        Conditional message using ternary operator
+        If searchTerm exists: "No results found for your search"
+        Otherwise: "No items to display"
+      -->
+      <p>{{ searchTerm ? "No results found for your search" : "No items to display" }}</p>
+
+      <!-- 
+        Clear Search Button
+        *ngIf: Only shows if searchTerm has a value
+        Allows user to reset search and see all items again
+      -->
+      <button *ngIf="searchTerm" class="clear-search-btn" (click)="clearSearch()">
+        Clear Search
+      </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         GRID ITEMS - The Actual Cards/Items
+         ═══════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- 
+      GRID ITEM WRAPPER
+      *ngFor: Loops through displayItems array (filtered, sorted, paginated data)
+      let item: Creates local template variable 'item' with current item data
+      let i = index: Creates local template variable 'i' with current iteration index (0-based)
+      [class.grid-item-animate]: Dynamic class - adds animation class if animate is true
+    -->
+    <div
+      *ngFor="let item of displayItems; let i = index"
+      class="grid-item"
+      [class.grid-item-animate]="animate">
+      <!-- ═══════════════════════════════════════════════════════════════════════════
+           CUSTOM CARD TEMPLATE FROM PARENT
+           ═══════════════════════════════════════════════════════════════════════════ -->
+
+      <!-- 
+        CONTENT PROJECTION WITH ng-template
+        This is where the parent component's custom card design gets rendered
+
+        *ngIf: Only renders if parent provided a cardTemplate
+
+        [ngTemplateOutlet]: Directive that renders the template reference
+        - Receives the cardTemplate captured via @ContentChild('cardTemplate')
+
+        [ngTemplateOutletContext]: Provides data to the parent's template
+        - Object containing context variables parent can access
+        - Multiple ways parent can access data:
+
+        Context Object Breakdown:
+        {
+          $implicit: item,  // Default binding - parent uses: let-anyName
+          item: item,       // Named binding - parent uses: let-item="item"
+          index: i          // Named binding - parent uses: let-i="index"
+        }
+
+        Parent's Template Example:
+        (Example Only - do not uncomment)
+        <ng-template #cardTemplate let-product let-i="index">
+          <h3>{{ product.name }}</h3>  // $implicit binding
+          <span>Item #{{ i + 1 }}</span>  // index binding
+        </ng-template>
+      -->
+
+      <ng-container
+        *ngIf="cardTemplate"
+        [ngTemplateOutlet]="cardTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item, item: item, index: i }"></ng-container>
+
+      <!-- ═══════════════════════════════════════════════════════════════════════════
+           FALLBACK DEFAULT CARD
+           ═══════════════════════════════════════════════════════════════════════════ -->
+
+      <!-- 
+        DEFAULT CARD (Fallback)
+        *ngIf: Only renders if parent did NOT provide a cardTemplate
+        Shows a simple card with JSON dump of the item
+        
+        Pipe Usage:
+        {{ item | json }} - Uses Angular's built-in JsonPipe to format object as JSON string
+        This is just for debugging/demo purposes
+      -->
+      <div *ngIf="!cardTemplate" class="default-card">
+        <div class="card-content">
+          <pre>{{ item | json }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

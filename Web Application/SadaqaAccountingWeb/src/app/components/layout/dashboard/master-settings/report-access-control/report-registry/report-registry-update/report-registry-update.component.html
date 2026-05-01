@@ -1,0 +1,96 @@
+<ng-container *ngIf="isBrowser">
+    <div *ngIf="selectedReportRegistryId > 0">
+        <form [formGroup]="reportRegistryForm" (ngSubmit)="onClickUpdateReportRegistry()" autocomplete="off">
+            <div class="modal-body pb-0">
+                <div class="row">
+                    <!-- ModuleId -->
+                    <div class="col-md-6 mb-4">
+                        <label for="moduleId" class="form-label">
+                            Module
+                            <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <select id="moduleId" name="moduleId" formControlName="moduleId"
+                            class="form-select select2-update-Modal">
+                            <option [value]="-1">Choose Module...</option>
+                            <option *ngFor="let module of modules" [value]="module.id">{{ module.name }}</option>
+                        </select>
+                        <!-- Error display using shared component -->
+                        <app-form-error [control]="getControl('moduleId')" label="Module"></app-form-error>
+                    </div>
+
+                    <!-- Report Code -->
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label">
+                            Report Code
+                            <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="text" formControlName="reportCode" class="form-control" placeholder="Report Code"
+                            readonly />
+                        <app-form-error [control]="getControl('reportCode')" label="Report Code"></app-form-error>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label for="reportGroup" class="form-label">Report Group
+                            <span class="text-danger fw-bold">*</span></label>
+                        <select #reportGroup formControlName="reportGroup" class="form-select">
+                            <option *ngFor="let reportRegistry of reportRegistryGridModel"
+                                [value]="reportRegistry.reportGroup">
+                                {{ reportRegistry.reportGroup }}
+                            </option>
+                        </select>
+                        <app-form-error [control]="getControl('reportGroup')" label="Report Group"></app-form-error>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label">
+                            Report Name
+                            <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="text" formControlName="name" class="form-control" placeholder="Report Name" />
+                        <app-form-error [control]="getControl('name')" label="Report Name"></app-form-error>
+                    </div>
+
+                    <!-- Url -->
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label">
+                            Url
+                            <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <input type="text" formControlName="url" class="form-control" placeholder="Report Url" />
+                        <app-form-error [control]="getControl('url')" label="Report Url"></app-form-error>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-6 mb-4">
+                        <label for="statusId" class="form-label">
+                            Status
+                            <span class="text-danger fw-bold">*</span>
+                        </label>
+                        <select id="statusId" name="statusId" formControlName="statusId"
+                            class="form-select select2-update-Modal">
+                            <option [value]="-1" selected>Choose Status...</option>
+                            <option *ngFor="let status of statuses" [value]="status.id">{{ status.name }}</option>
+                        </select>
+                        <!-- Error display using shared component -->
+                        <app-form-error [control]="getControl('statusId')" label="Status"></app-form-error>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white border me-2" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="reportRegistryForm.invalid"
+                    data-bs-dismiss="modal" *appCheckPermission="{ feature: 'Report Registry', action: 'Update' }">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</ng-container>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true">
+    <p style="color: white">Loading...</p>
+</ngx-spinner>

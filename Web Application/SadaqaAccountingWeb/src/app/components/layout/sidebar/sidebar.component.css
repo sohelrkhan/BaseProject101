@@ -1,0 +1,147 @@
+a.active {
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #d4e3f0;
+  font-size: 14px !important;
+}
+
+ul li .submenu > ul li a.active {
+  color: #504b4b;
+}
+
+.sidebar-inner {
+  max-height: calc(100vh - 10px);
+  overflow-y: hidden;
+  transition: overflow 0.2s;
+  scrollbar-width: thin;
+  z-index: 1030;
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.sidebar-menu .submenu ul {
+  display: none;
+  padding-left: 15px;
+}
+
+.sidebar-menu .submenu.open > ul {
+  display: block;
+}
+
+.submenu ul {
+  display: none;
+}
+
+.submenu ul.show {
+  display: block;
+}
+
+/* Responsive Logo Styles for Sidebar States */
+.sidebar-logo {
+  margin-bottom: 5px;
+  background-color: white;
+  text-align: center;
+  position: fixed;
+  height: 50px;
+  width: 252px;
+  padding: 16px 16px 0;
+  transition:
+    width 0.3s ease,
+    padding 0.3s ease;
+  overflow: hidden;
+}
+
+/* Logo image responsive sizing */
+.sidebar-logo img {
+  transition: all 0.3s ease;
+  height: auto;
+  max-height: 35px;
+  width: auto;
+  max-width: 100%;
+}
+
+/* Collapsed sidebar - mini logo */
+.mini-sidebar .sidebar .sidebar-logo {
+  width: 72px;
+  padding: 16px 8px 0;
+}
+
+.mini-sidebar .sidebar .sidebar-logo img {
+  height: 30px;
+  width: 30px;
+  max-width: 30px;
+  border-radius: 4px;
+}
+
+/* Expanded menu on larger screens */
+@media (min-width: 992px) {
+  .expand-menu.mini-sidebar .sidebar .sidebar-logo {
+    width: 252px;
+    padding: 16px 16px 0;
+  }
+
+  .expand-menu.mini-sidebar .sidebar .sidebar-logo img {
+    height: 35px;
+    width: 100px;
+    max-width: 100px;
+    border-radius: 0;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+  .sidebar-logo {
+    width: 252px;
+    padding: 16px 16px 0;
+  }
+
+  .sidebar-logo img {
+    height: 35px;
+    width: 100px;
+    max-width: 100px;
+  }
+}
+
+/* Smooth transitions for logo text/brand name if needed */
+.sidebar-logo .logo-text {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  font-size: 14px;
+  font-weight: 600;
+  color: #017adc;
+  margin-top: 5px;
+}
+
+.mini-sidebar .sidebar .sidebar-logo .logo-text {
+  opacity: 0;
+  font-size: 0;
+}
+
+.mini-sidebar .sidebar .sidebar-logo {
+  width: 72px;
+  padding: 16px 8px 0;
+  background-color: #017adc;
+}
+
+/* Hide scrollbar by default */
+.sidebar-inner {
+  overflow-y: hidden;
+}
+
+/* Show scrollbar on hover */
+.sidebar:hover .sidebar-inner {
+  overflow-y: auto;
+}
+
+/* Optional: style the scrollbar for better appearance */
+.sidebar-inner::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar-inner::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}

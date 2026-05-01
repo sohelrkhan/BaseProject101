@@ -1,0 +1,123 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="d-md-flex d-block align-items-center justify-content-between page-breadcrumb mb-3">
+      <div class="my-auto mb-2">
+        <h2 class="mb-1">Administration</h2>
+        <nav>
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a><i class="ti ti-smart-home"></i></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Configurations</li>
+            <li class="breadcrumb-item active" aria-current="page" routerLink="/app/companies">Companies List</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="d-flex my-xl-auto right-content align-items-center flex-wrap">
+        <div class="mb-2" *appCheckPermission="{ feature: 'Company', action: 'Create' }">
+          <a routerLink="/app/company/create" class="btn btn-primary d-flex align-items-center">
+            <i class="ti ti-circle-plus me-2"></i>
+            Add Company
+          </a>
+        </div>
+        <div class="ms-2 head-icons">
+          <a href="javascript:void(0);" class data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Collapse" id="collapse-header">
+            <i class="ti ti-chevrons-up"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+              <h5>Companies List</h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="custom-datatable-filter p-3" *ngIf="isTableReady">
+                <div class="table-responsive" *ngIf="isTableReady">
+                  <table id="example" class="table table-bordered align-middle" *ngIf="isBrowser">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let company of companies">
+                        <td style="cursor: pointer">
+                          <div class="d-flex align-items-center file-name-icon">
+                            <a href="javascript:void(0);" class="avatar avatar-md border avatar-rounded">
+                              <img [src]="company.logo ? applicationBaseUrl + company.logo : 'assets/img/profiles/avatar-12.jpg'"
+                                class="img-fluid avatar-img w-100 h-100 rounded-circle object-fit-cover"
+                                alt="img" />
+                            </a>
+                            <div class="ms-2">
+                              <span>{{ company.name }}</span> <br>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <i class="ti ti-world-www text-primary me-1"></i>
+                          {{ company.website || "N/A" }}
+                          <br />
+                          <i class="ti ti-at text-success me-1"></i>
+                          {{ company.email || "N/A" }}
+                          <br />
+                          <i class="ti ti-phone text-info me-1"></i>
+                          {{ company.mobile || "N/A" }}
+                          <br />
+                          <address><i class="ti ti-map-pins text-danger me-1"></i> {{ company.address  || "N/A"}}</address>
+                        </td>
+                        <td class="text-center">
+                          <span *ngIf="company.statusId == 1" class="badge bg-success m-1">{{ company.statusName }}</span>
+                          <span *ngIf="company.statusId == 2" class="badge bg-danger m-1">{{ company.statusName }}</span>
+                        </td>
+                        <td>
+                          <div class="hstack gap-2 fs-15 align-content-center justify-content-center">
+                            <a routerLink="/app/company/update/{{ company.encryptedId }}" class="btn btn-icon btn-sm btn-info rounded-pill"
+                              *appCheckPermission="{ feature: 'Company', action: 'Update' }">
+                              <i class="feather-edit"></i>
+                            </a>
+                            <a class="btn btn-icon btn-sm btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#delete_company_modal"
+                              (click)="onClickOpenDeleteCompanyModal(company.encryptedId)"
+                              *appCheckPermission="{ feature: 'Company', action: 'Delete' }">
+                              <i class="feather-trash"></i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Company Modal -->
+<div class="modal fade" id="delete_company_modal">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <span class="avatar avatar-xl bg-transparent-danger text-danger mb-3">
+          <i class="ti ti-trash-x fs-36"></i>
+        </span>
+        <h4 class="mb-1">Confirm Delete</h4>
+        <div class="d-flex justify-content-center mt-3">
+          <a href="javascript:void(0);" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</a>
+          <a class="btn btn-danger" (click)="onClickDeleteCompany()" *appCheckPermission="{ feature: 'Company', action: 'Delete' }" data-bs-dismiss="modal">Yes, Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-spin" [fullScreen]="true"> 
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

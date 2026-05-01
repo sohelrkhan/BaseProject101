@@ -1,0 +1,86 @@
+<form (ngSubmit)="onClickUpdateEvent()" autocomplete="off">
+  <div class="modal-body pb-0">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">
+          Event Name
+          <span class="text-danger fw-bold">*</span>
+        </label>
+        <input
+          type="text"
+          id="eventName"
+          name="eventName"
+          class="form-control"
+          [(ngModel)]="eventUpdateModel.name"
+          maxlength="150"
+          placeholder="Event Name"
+        />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label"> Start Date </label>
+        <div class="input-icon position-relative w-100 me-2">
+          <input
+            type="text"
+            id="startDateString"
+            name="startDateString"
+            [(ngModel)]="eventUpdateModel.startDateString"
+            class="form-control datetimepicker ps-3"
+            value=""
+            placeholder="Start Date"
+          />
+          <span class="input-icon-addon">
+            <i class="ti ti-calendar"></i>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label"> End Date </label>
+        <div class="input-icon position-relative w-100 me-2">
+          <input
+            type="text"
+            id="endDateString"
+            name="endDateString"
+            [(ngModel)]="eventUpdateModel.endDateString"
+            class="form-control datetimepicker ps-3"
+            value=""
+            placeholder="End Date"
+          />
+          <span class="input-icon-addon">
+            <i class="ti ti-calendar"></i>
+          </span>
+        </div>
+      </div>
+      <!-- Description -->
+      <div class="col-md-6">
+        <label class="form-label">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          [(ngModel)]="eventUpdateModel.description"
+          maxlength="255"
+          placeholder="Description"
+          rows="4"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Footer -->
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-white border me-2"
+      data-bs-dismiss="modal"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      data-bs-dismiss="modal"
+      *appCheckPermission="{ feature: 'Event', action: 'Update' }"
+    >
+      Update
+    </button>
+  </div>
+</form>

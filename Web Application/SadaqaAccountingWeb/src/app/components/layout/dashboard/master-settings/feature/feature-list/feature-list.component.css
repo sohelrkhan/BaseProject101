@@ -1,0 +1,16 @@
+.card-body {
+  max-height: 650px;
+}
+.feature-list {
+  scrollbar-width: thin;
+}
+.feature-list::-webkit-scrollbar {
+  width: 6px;
+}
+.feature-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+.feature-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
