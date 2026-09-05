@@ -9,7 +9,6 @@
         private readonly CreateCompanySeedCommand _createCompanySeedCommand;
         private readonly CreateSuperAdminUserCommand _createSuperAdminUserCommand;              
         private readonly CreateUserAccessMappingSeedCommand _createUserAccessMappingSeedCommand;    
-        private readonly CreateAccountUnitSeedCommand _createAccountUnitSeedCommand;
         private readonly CreateReportRegistrySeedCommand _createReportRegistrySeedCommand;
 
         public DatabaseSeederConfiguration(
@@ -20,7 +19,6 @@
             CreateCompanySeedCommand createCompanySeedCommand, 
             CreateSuperAdminUserCommand createSuperAdminUserCommand, 
             CreateUserAccessMappingSeedCommand createUserAccessMappingSeedCommand, 
-            CreateAccountUnitSeedCommand createAccountUnitSeedCommand, 
             CreateReportRegistrySeedCommand createReportRegistrySeedCommand)
         {
             _createEnumSeedCommand = createEnumSeedCommand;
@@ -30,7 +28,6 @@
             _createCompanySeedCommand = createCompanySeedCommand;
             _createSuperAdminUserCommand = createSuperAdminUserCommand;
             _createUserAccessMappingSeedCommand = createUserAccessMappingSeedCommand;
-            _createAccountUnitSeedCommand = createAccountUnitSeedCommand;
             _createReportRegistrySeedCommand = createReportRegistrySeedCommand;
         }
 
@@ -44,7 +41,6 @@
             await _createCompanySeedCommand.SeedAsync();
             await _createSuperAdminUserCommand.SeedAsync();
             await _createUserAccessMappingSeedCommand.SeedAsync();
-            await _createAccountUnitSeedCommand.SeedAsync();
             await _createReportRegistrySeedCommand.SeedAsync();
         }
     }

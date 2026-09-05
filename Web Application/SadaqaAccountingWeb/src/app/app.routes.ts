@@ -9,7 +9,6 @@ import { hrmsRoutes } from "./routes/hrms.routing";
 import { TriggerResetPasswordComponent } from "./components/layout/dashboard/master-settings/access-control/triggerResetPassword/triggerResetPassword.component";
 import { SetUserAccountUnitComponent } from "./components/login/set-user-account-unit/set-user-account-unit.component";
 import { ReportsComponent } from "./components/layout/dashboard/reports/reports.component";
-import { IncomeExpenseReportComponent } from "./components/layout/dashboard/reports/income-expense-report/income-expense-report.component";
 
 export const routes: Routes = [
   
@@ -34,8 +33,6 @@ export const routes: Routes = [
       // HRMS Route
       ...hrmsRoutes,
       { path: 'reports', component: ReportsComponent },
-      //Income Expense Report
-      { path: "income-expense-report", component: IncomeExpenseReportComponent },
       // Reset Login
       { path: "reset-Login", component: TriggerResetPasswordComponent }
     ],

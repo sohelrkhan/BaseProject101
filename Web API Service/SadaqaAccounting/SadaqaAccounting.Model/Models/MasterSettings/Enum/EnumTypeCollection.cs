@@ -12,8 +12,6 @@
             Actions = new HashSet<AccessControl.Action>();
             Roles = new HashSet<Role>();
             ReportRegistries = new HashSet<ReportRegistry>();
-            Banks = new HashSet<Bank>();
-            IncomeMonths = new HashSet<Income>();
             #endregion
         }
 
@@ -41,8 +39,6 @@
         public ICollection<AccessControl.Action> Actions { get; set; }
         public ICollection<Role> Roles { get; set; }
         public ICollection<ReportRegistry> ReportRegistries { get; set; }
-        public ICollection<Bank> Banks { get; set; }
-        public ICollection<Income> IncomeMonths { get; set; }
         #endregion
     }
 }

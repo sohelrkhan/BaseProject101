@@ -1,6 +1,4 @@
 ﻿using SadaqaAccounting.Application.ApplicationLogic.MasterSettings.ReportAccessControl.ReportRegistryLogic.Command;
-﻿using SadaqaAccounting.Repository.Contracts.AssetManagement;
-using SadaqaAccounting.Repository.Repository.AssetManagement;
 
 namespace SadaqaAccounting.Application.Configurations
 {
@@ -45,7 +43,6 @@ namespace SadaqaAccounting.Application.Configurations
             // Register other repositories as needed
             services.AddScoped<IAccountUnitRepository, AccountUnitRepository>();
             services.AddScoped<IUserAccountUnitRepository, UserAccountUnitRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
             #endregion
 
             #region Crypto Service
@@ -61,34 +58,7 @@ namespace SadaqaAccounting.Application.Configurations
             services.AddScoped<CreateCompanySeedCommand>();
             services.AddScoped<CreateSuperAdminUserCommand>();
             services.AddScoped<CreateUserAccessMappingSeedCommand>();
-            services.AddScoped<CreateAccountUnitSeedCommand>();
             services.AddScoped<CreateReportRegistrySeedCommand>();
-            #endregion
-
-            #region Expense Management
-            services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
-            services.AddScoped<IExpenseRepository, ExpenseRepository>();
-            #endregion
-
-            #region Income Management
-            services.AddScoped<IIncomeCategoryRepository, IncomeCategoryRepository>();
-            services.AddScoped<IIncomeRepository, IncomeRepository>();
-            #endregion
-
-            #region Donor Management
-            services.AddScoped<IDonorRepository, DonorRepository>();
-            #endregion
-
-            #region CashBankManagement
-            services.AddScoped<IBankRepository, BankRepository>();
-            services.AddScoped<ICashLedgerRepository, CashLedgerRepository>();
-            services.AddScoped<IBankLedgerRepository, BankLedgerRepository>();
-            services.AddScoped<ICashRepository, CashRepository>();
-            services.AddScoped<IOpeningBalanceRepository, OpeningBalanceRepository>();
-            #endregion
-
-            #region Asset Management
-            services.AddScoped<IAssettRepository, AssettRepository>();
             #endregion
 
             // Notification Service - AddSignalR

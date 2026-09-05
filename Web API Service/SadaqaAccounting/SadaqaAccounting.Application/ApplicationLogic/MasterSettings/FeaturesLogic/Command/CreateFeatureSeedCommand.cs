@@ -63,14 +63,9 @@
         {
             return new List<SadaqaAccounting.Model.Models.MasterSettings.Module>()
             {
-                new SadaqaAccounting.Model.Models.MasterSettings.Module { Code = "MS", Name = "Master Setting", 
+                new SadaqaAccounting.Model.Models.MasterSettings.Module { Code = "MS", Name = "Master Setting",
                     StatusId = GlobalStatus.Active },
-                new SadaqaAccounting.Model.Models.MasterSettings.Module { Code = "EM", Name = "Expense Management", 
-                    StatusId = GlobalStatus.Active },
-                new SadaqaAccounting.Model.Models.MasterSettings.Module { Code = "IM", Name = "Income Management", 
-                    StatusId = GlobalStatus.Active },
-                new SadaqaAccounting.Model.Models.MasterSettings.Module { Code = "CBM", Name = "Cash Bank Management", 
-                    StatusId = GlobalStatus.Active },
+
                 new SadaqaAccounting.Model.Models.MasterSettings.Module { Code = "RPT", Name = "Reports & Analytics", 
                     StatusId = GlobalStatus.Active },
             };
@@ -93,29 +88,9 @@
                 new Feature { Code = "AccountUnit", Name = "Account Unit", ModuleId = 1, LinkedTableName = "AccountUnits", LinkedControllerName = "AccountUnit", StatusId = GlobalStatus.Active },
                 new Feature { Code = "Company", Name = "Company", ModuleId = 1, LinkedTableName = "Companies", LinkedControllerName = "Company", StatusId = GlobalStatus.Active },
                 new Feature { Code = "Employee", Name = "Employee", ModuleId = 1, LinkedTableName = "Employees", LinkedControllerName = "Employee", StatusId = GlobalStatus.Active },
-                new Feature { Code = "Donor", Name = "Donor", ModuleId = 1, LinkedTableName = "Donors", LinkedControllerName = "Donor", StatusId = GlobalStatus.Active },
                 new Feature { Code = "Module", Name = "Module", ModuleId = 1, LinkedTableName = "Modules", LinkedControllerName = "Module", StatusId = GlobalStatus.Active },
-                new Feature { Code = "Event", Name = "Event", ModuleId = 1, LinkedTableName = "Events", LinkedControllerName = "Event", StatusId = GlobalStatus.Active },
                 new Feature { Code = "ReportRegistry", Name = "Report Registry", ModuleId = 1, LinkedTableName = "ReportRegistries", LinkedControllerName = "ReportRegistry", StatusId = GlobalStatus.Active },
                 new Feature { Code = "ReportUserAccess", Name = "Report User Access", ModuleId = 1, LinkedTableName = "ReportUserAccess", LinkedControllerName = "ReportUserAccess", StatusId = GlobalStatus.Active },
-                #endregion
-
-                #region Expense Management
-                new Feature { Code = "ExpenseCategory", Name = "Expense Category", ModuleId = 2, LinkedTableName = "ExpenseCategories", LinkedControllerName = "ExpenseCategory", StatusId = GlobalStatus.Active },
-                new Feature { Code = "Expense", Name = "Expense", ModuleId = 2, LinkedTableName = "Expenses", LinkedControllerName = "Expense", StatusId = GlobalStatus.Active },
-                #endregion
-
-                #region Income Management
-                new Feature { Code = "IncomeCategory", Name = "Income Category", ModuleId = 3, LinkedTableName = "IncomeCategories", LinkedControllerName = "IncomeCategory", StatusId = GlobalStatus.Active },
-                new Feature { Code = "Income", Name = "Income", ModuleId = 3, LinkedTableName = "Incomes", LinkedControllerName = "Income", StatusId = GlobalStatus.Active },
-                #endregion
-
-                #region Cash Bank Management
-                new Feature { Code = "Bank", Name = "Bank", ModuleId = 5, LinkedTableName = "Banks", 
-                    LinkedControllerName = "Bank", StatusId = GlobalStatus.Active },
-                 new Feature { Code = "OpeningBalance", Name = "Opening Balance", ModuleId = 5, 
-                     LinkedTableName = "OpeningBalances", LinkedControllerName = "OpeningBalance", 
-                     StatusId = GlobalStatus.Active }
                 #endregion
             };
         }

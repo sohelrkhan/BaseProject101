@@ -1,5 +1,4 @@
-﻿using SadaqaAccounting.Model.Models.CashBankManagement;
-
+﻿
 namespace SadaqaAccounting.Database.DatabaseContexts
 {
     public class DatabaseContext : IdentityDbContext
@@ -29,18 +28,6 @@ namespace SadaqaAccounting.Database.DatabaseContexts
         // New database sets should be added here.
         public DbSet<AccountUnit> AccountUnits { get; set; }
         public DbSet<UserAccountUnit> UserAccountUnits { get; set; }
-        public DbSet<Donor> Donors { get; set; }
-        public DbSet<IncomeCategory> IncomeCategories { get; set; }
-        public DbSet<Bank> Banks { get; set; }
-        public DbSet<Cash> Cashes { get; set; }
-        public DbSet<Event> Events { get; set; }
-        public DbSet<Income> Incomes { get; set; }
-        public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
-        public DbSet<Expense> Expenses { get; set; }
-        public DbSet<CashLedger> CashLedgers { get; set; }
-        public DbSet<BankLedger> BankLedgers { get; set; }
-        public DbSet<Asset> Assets { get; set; }
-        public DbSet<OpeningBalance> OpeningBalances { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -66,14 +53,6 @@ namespace SadaqaAccounting.Database.DatabaseContexts
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
-
-            #region Income Management
-            modelBuilder.Entity<Income>()
-                .HasOne(d => d.Month)
-                .WithMany(e => e.IncomeMonths)
-                .HasForeignKey(d => d.MonthId)
-                .OnDelete(DeleteBehavior.Restrict);
-            #endregion
         }
     }
 }

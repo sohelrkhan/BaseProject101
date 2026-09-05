@@ -85,6 +85,7 @@
 	</Target>
 
 	<ItemGroup>
+	  <Folder Include="Controllers\Reports\" />
 	  <Folder Include="wwwroot\Upload\EmployeeImage\" />
 	</ItemGroup>
 

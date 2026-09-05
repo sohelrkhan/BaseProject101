@@ -25,30 +25,6 @@ import { ReportUserAccessComponent } from '../components/layout/dashboard/master
 import { EmployeeCreateComponent } from '../components/layout/dashboard/hrms/employee/employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from '../components/layout/dashboard/hrms/employee/employee-update/employee-update.component';
 import { EmployeeListComponent } from '../components/layout/dashboard/hrms/employee/employee-list/employee-list.component';
-import { EventsCreateComponent } from '../components/layout/dashboard/master-settings/events/events-create/events-create.component';
-import { EventsUpdateComponent } from '../components/layout/dashboard/master-settings/events/events-update/events-update.component';
-import { EventsComponent } from '../components/layout/dashboard/master-settings/events/events.component';
-import { DonorCreateComponent } from '../components/layout/dashboard/donor-management/donors/donor-create/donor-create.component';
-import { DonorUpdateComponent } from '../components/layout/dashboard/donor-management/donors/donor-update/donor-update.component';
-import { DonorsComponent } from '../components/layout/dashboard/donor-management/donors/donors.component';
-import { ExpenseCategoriesComponent } from '../components/layout/dashboard/expense-management/expense-categories/expense-categories.component';
-import { ExpenseCategoryCreateComponent } from '../components/layout/dashboard/expense-management/expense-categories/expense-category-create/expense-category-create.component';
-import { ExpenseCategoryUpdateComponent } from '../components/layout/dashboard/expense-management/expense-categories/expense-category-update/expense-category-update.component';
-import { IncomeCategoriesComponent } from '../components/layout/dashboard/income-management/income-categories/income-categories.component';
-import { IncomeCategoryCreateComponent } from '../components/layout/dashboard/income-management/income-categories/income-category-create/income-category-create.component';
-import { IncomeCategoryUpdateComponent } from '../components/layout/dashboard/income-management/income-categories/income-category-update/income-category-update.component';
-import { ExpensesComponent } from '../components/layout/dashboard/expense-management/expenses/expenses.component';
-import { ExpenseCreateComponent } from '../components/layout/dashboard/expense-management/expenses/expense-create/expense-create.component';
-import { ExpenseUpdateComponent } from '../components/layout/dashboard/expense-management/expenses/expense-update/expense-update.component';
-import { BanksComponent } from '../components/layout/dashboard/cash-bank-management/banks/banks.component';
-import { BankCreateComponent } from '../components/layout/dashboard/cash-bank-management/banks/bank-create/bank-create.component';
-import { BankUpdateComponent } from '../components/layout/dashboard/cash-bank-management/banks/bank-update/bank-update.component';
-import { IncomeCreateComponent } from '../components/layout/dashboard/income-management/incomes/income-create/income-create.component';
-import { IncomeUpdateComponent } from '../components/layout/dashboard/income-management/incomes/income-update/income-update.component';
-import { IncomesComponent } from '../components/layout/dashboard/income-management/incomes/incomes.component';
-import { OpeningBalancesComponent } from '../components/layout/dashboard/cash-bank-management/opening-balances/opening-balances.component';
-import { OpeningBalanceCreateComponent } from '../components/layout/dashboard/cash-bank-management/opening-balances/opening-balance-create/opening-balance-create.component';
-import { OpeningBalanceUpdateComponent } from '../components/layout/dashboard/cash-bank-management/opening-balances/opening-balance-update/opening-balance-update.component';
 
 export const hrmsRoutes: Routes = [
   // For dashboard
@@ -74,7 +50,10 @@ export const hrmsRoutes: Routes = [
   { path: 'feature-global', component: FeatureListGlobalComponent },
   { path: 'feature/create', component: FeatureCreateComponent },
   { path: 'feature/update/:recordId', component: FeatureUpdateComponent },
-  { path: 'feature/workflow_setting/:recordId', component: FeatureWorkflowSettingComponent },
+  {
+    path: 'feature/workflow_setting/:recordId',
+    component: FeatureWorkflowSettingComponent,
+  },
 
   // For feature
   { path: 'features', component: FeatureListComponent },
@@ -92,13 +71,22 @@ export const hrmsRoutes: Routes = [
   { path: 'action/update/:recordId', component: ActionUpdateComponent },
 
   // For feature action mapping
-  { path: 'feature-action-mapping/create', component: FeatureActionMappingCreateComponent },
+  {
+    path: 'feature-action-mapping/create',
+    component: FeatureActionMappingCreateComponent,
+  },
 
   // For user account unit mapping
-  { path: 'user-account-mapping/create', component: CreateUserAccountUnitComponent },
+  {
+    path: 'user-account-mapping/create',
+    component: CreateUserAccountUnitComponent,
+  },
 
   // For user access control
-  { path: 'user-access-control/create', component: CreateUserAccessControlComponent },
+  {
+    path: 'user-access-control/create',
+    component: CreateUserAccessControlComponent,
+  },
 
   // For Report Registry
   { path: 'report-registry', component: ReportRegistryComponent },
@@ -108,44 +96,4 @@ export const hrmsRoutes: Routes = [
   { path: 'employees', component: EmployeeListComponent },
   { path: 'employee/create', component: EmployeeCreateComponent },
   { path: 'employee/update/:recordId', component: EmployeeUpdateComponent },
-
-  // Bank
-  { path: 'banks', component: BanksComponent },
-  { path: 'bank/create', component: BankCreateComponent },
-  { path: 'bank/update/:recordId', component: BankUpdateComponent },
-
-  // Opening Balance
-  { path: 'opening-balances', component: OpeningBalancesComponent },
-  { path: 'opening-balance/create', component: OpeningBalanceCreateComponent },
-  { path: 'opening-balance/update/:recordId', component: OpeningBalanceUpdateComponent },
-
-  // Expense Category
-  { path: 'expense-categories', component: ExpenseCategoriesComponent },
-  { path: 'expense-category/create', component: ExpenseCategoryCreateComponent },
-  { path: 'expense-category/update/:recordId', component: ExpenseCategoryUpdateComponent },
-
-  // Expense 
-  { path: 'expenses', component: ExpensesComponent },
-  { path: 'expense/create', component: ExpenseCreateComponent },
-  { path: 'expense/update/:recordId', component: ExpenseUpdateComponent },
-
-  // For event
-  { path: 'events', component: EventsComponent },
-  { path: 'event/create', component: EventsCreateComponent },
-  { path: 'event/update/:recordId', component: EventsUpdateComponent },
-
-  // For donor
-  { path: 'donors', component: DonorsComponent },
-  { path: 'donor/create', component: DonorCreateComponent },
-  { path: 'donor/update/:recordId', component: DonorUpdateComponent },
-
-  // Income Category
-  { path: 'income-categories', component: IncomeCategoriesComponent },
-  { path: 'income-category/create', component: IncomeCategoryCreateComponent },
-  { path: 'income-category/update/:recordId', component: IncomeCategoryUpdateComponent },
-
-  // Income
-  { path: 'incomes', component: IncomesComponent },
-  { path: 'income/create', component: IncomeCreateComponent },
-  { path: 'income/update/:recordId', component: IncomeUpdateComponent }
 ];
